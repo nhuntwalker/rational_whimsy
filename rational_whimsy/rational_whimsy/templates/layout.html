@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rational Whimsy | {% block title %}{% endblock %} </title>
+</head>
+<body>
+    <main>
+    <header>
+        <nav>
+            <ul>
+                {% if page == "home" %}
+                    <li class="active">Home</li>
+                {% else %}
+                    <li>Home</li>
+                {% endif %}
+                {% if page == "about" %}
+                    <li class="active">About Me</li>
+                {% else %}
+                    <li>About Me</li>
+                {% endif %}
+                {% if page == "blog" %}
+                    <li class="active">Blog</li>
+                {% else %}
+                    <li>Blog</li>
+                {% endif %}
+                {% if page == "Projects" %}
+                    <li class="active">Projects</li>
+                {% else %}
+                    <li>Projects</li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    {% block content %}{% endblock %}
+    <footer>
+        Copyright &copy; 2014 Rational Whimsy
+        <nav>
+            <li>Twitter</li>
+            <li>LinkedIn</li>
+            <li>Instagram</li>
+            <li>GitHub</li>
+        </nav>
+    </footer>
+    </main>
+</body>
+</html>

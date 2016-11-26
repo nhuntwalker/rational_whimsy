@@ -6,7 +6,7 @@ setup(
     author="Nicholas Hunt-Walker",
     author_email="nhuntwalker@gmail.com",
     description="This is my main website for blogs, projects, you name it.",
-    install_requires=["ipython", "django"],
+    install_requires=["ipython", "django", "psycopg2"],
     extras_require={
         "test": ["pytest", "pytest-cov", "pytest-watch", "tox"]
     },
