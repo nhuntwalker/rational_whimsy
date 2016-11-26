@@ -12,12 +12,12 @@ def list_posts(request):
     })
 
 
-def post_detail(request, id=None, slug=None):
+def post_detail(request, pk=None, slug=None):
     """Look at a single blog post in detail."""
     if slug:
         post = Post.published.get(slug=slug)
-    elif id:
-        post = Post.published.get(id=id)
+    elif pk:
+        post = Post.published.get(pk=pk)
     else:
         return render(request, "notfound.html", {
             "page": "blog"
@@ -36,7 +36,7 @@ def create_post(request):
     })
 
 
-def edit_post(request, id=None):
+def edit_post(request, pk=None):
     """Edit an existing blog post."""
     return render(request, "notfound.html", {
         "page": "blog"
