@@ -18,10 +18,6 @@ def post_detail(request, pk=None, slug=None):
         post = Post.published.get(slug=slug)
     elif pk:
         post = Post.published.get(pk=pk)
-    else:
-        return render(request, "notfound.html", {
-            "page": "blog"
-        })
 
     return render(request, "blog/blog_detail.html", {
         "page": "blog",
