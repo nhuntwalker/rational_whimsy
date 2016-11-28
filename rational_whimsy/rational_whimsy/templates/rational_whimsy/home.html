@@ -4,9 +4,13 @@
 
 {% block content %}
 {% if featured_post %}
-    <section id="featured-post">
-        <h2>{{ featured_post.title }}</h2>
-        <p>{{ featured_post.body | truncatewords:30 }}</p>
+    <section id="featured">
+        <section id="featured-background">
+        </section>
+        <section id="featured-post">
+            <h2>{{ featured_post.title }}</h2>
+            <p>{% lorem 20 w %}</p>
+        </section>
     </section>
 {% endif %}
 {% if posts %}

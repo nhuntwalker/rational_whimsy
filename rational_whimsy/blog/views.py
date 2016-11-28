@@ -25,15 +25,15 @@ def post_detail(request, pk=None, slug=None):
     })
 
 
-def create_post(request):
-    """Create a new blog post."""
-    return render(request, "notfound.html", {
-        "page": "blog"
-    })
+# def create_post(request):
+#     """Create a new blog post."""
+#     return render(request, "notfound.html", {
+#         "page": "blog"
+#     })
 
 
-def edit_post(request, pk=None):
-    """Edit an existing blog post."""
-    return render(request, "notfound.html", {
-        "page": "blog"
-    })
+# def edit_post(request, pk=None):
+#     """Edit an existing blog post."""
+#     return render(request, "notfound.html", {
+#         "page": "blog"
+#     })

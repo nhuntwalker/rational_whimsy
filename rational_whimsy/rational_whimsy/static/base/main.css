@@ -1,0 +1,47 @@
+* {
+    font-family: "Open Sans", sans-serif;
+    font-weight: lighter;
+}
+
+#mobile-menu a,
+#main-menu a {
+    text-decoration: none;
+}
+
+#mobile-menu a li,
+#main-menu a li {
+    color: #23a38f;
+    text-transform: uppercase;
+}
+
+#featured {
+    position: relative;
+}
+#featured a {
+    text-decoration: none;
+}
+
+#featured-background {
+    background-image: url("imgs/zen_garden.jpg");
+    background-position: center top;
+    background-size: 150% auto;
+    background-repeat: no-repeat;
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+}
+#featured-post {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+    background-color: rgba(0,0,0,0.2);
+}
+#featured-post p {
+    font-size: 1.3em;
+    margin: 0 3%;
+    line-height: 1.2em;
+}
