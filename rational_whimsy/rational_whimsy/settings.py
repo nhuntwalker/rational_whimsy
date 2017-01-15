@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
-    'rational_whimsy'
+    'my_profile',
+    'rational_whimsy',
+    'blog_images'
 ]
 
 MIDDLEWARE = [

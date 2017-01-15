@@ -3,7 +3,7 @@
 {% block title %}Blog{% endblock %}
 
 {% block content %}
-{% for post in posts %}
+{% for post in object_list %}
     <article>
         <h2>{{ post.title }}</h2>
         <p>Posted on {{ post.published_date | date:"M j, Y"}}</p>

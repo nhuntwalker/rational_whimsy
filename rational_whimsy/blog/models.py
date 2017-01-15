@@ -6,7 +6,8 @@ from django.db.models.signals import post_save
 
 PUBLICATION_STATUS = (
     ("published", "Published"),
-    ("draft", "Draft")
+    ("draft", "Draft"),
+    ("private", "Private")
 )
 
 

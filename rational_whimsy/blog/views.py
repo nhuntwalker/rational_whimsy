@@ -1,15 +1,21 @@
 """Views for the blog app."""
 from django.shortcuts import render
-from .models import Post
+from blog.models import Post
+from django.views.generic import ListView
+from django.views.generic.edit import CreateView
 
 
-def list_posts(request):
-    """Return a list of published blog posts."""
-    posts = Post.published.all()
-    return render(request, "blog/blog_list.html", {
-        "posts": posts,
-        "page": "blog"
-    })
+class ListPosts(ListView):
+    """List out all of the individual posts."""
+
+    model = Post
+    template_name = "blog/blog_list.html"
+
+    def get_context_data(self, **kwargs):
+        """Need to add a bit more context."""
+        context = super(ListPosts, self).get_context_data(**kwargs)
+        context["page"] = "blog"
+        return context
 
 
 def post_detail(request, pk=None, slug=None):
@@ -25,15 +31,10 @@ def post_detail(request, pk=None, slug=None):
     })
 
 
-# def create_post(request):
-#     """Create a new blog post."""
-#     return render(request, "notfound.html", {
-#         "page": "blog"
-#     })
+class CreatePost(CreateView):
+    """Create a new blog post."""
 
+    model = Post
+    fields = ["title", "body", "status", "featured"]
+    template_name = "blog/blog_form.html"
 
-# def edit_post(request, pk=None):
-#     """Edit an existing blog post."""
-#     return render(request, "notfound.html", {
-#         "page": "blog"
-#     })
