@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block title %}New Post{% endblock %}
+{% block title %}Edit Post{% endblock %}
 
 {% block content %}
 
@@ -8,7 +8,7 @@
 {% csrf_token %}
 {{ form.as_p }}
 
-<input type="submit" name="submit" value="Create New Post">
+<input type="submit" name="submit" value="Edit Post">
 </form>
 
 

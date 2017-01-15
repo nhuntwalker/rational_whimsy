@@ -26,7 +26,7 @@ class Post(models.Model):
     title = models.CharField(name="title", max_length=255)
     body = models.TextField(name="body")
     created = models.DateTimeField(name="created", auto_now_add=True)
-    published_date = models.DateTimeField(name="published_date")
+    published_date = models.DateTimeField(name="published_date", blank=True, null=True)
     modified = models.DateTimeField(name="modified", auto_now=True)
     slug = models.SlugField(max_length=255, unique=True)
 

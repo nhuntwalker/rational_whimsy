@@ -8,7 +8,7 @@
         <h2>{{ post.title }}</h2>
         <p>Posted on {{ post.published_date | date:"M j, Y"}}</p>
         <p>{{ post.body | truncatewords:100 | striptags}}</p>
-        <a href="{% url 'detail_slug' post.slug %}"><button>More</button></a>
+        <a href="{% url 'post_detail_slug' post.slug %}"><button>More</button></a>
     </article>
 {% endfor %}
 {% endblock %}

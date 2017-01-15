@@ -1,9 +1,9 @@
 """Views for the blog app."""
 from django.shortcuts import render
 from blog.models import Post
+from django.urls import reverse_lazy
 from django.views.generic import ListView
-from django.views.generic.edit import CreateView
-
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 class ListPosts(ListView):
     """List out all of the individual posts."""
@@ -38,3 +38,17 @@ class CreatePost(CreateView):
     fields = ["title", "body", "status", "featured"]
     template_name = "blog/blog_form.html"
 
+
+class EditPost(UpdateView):
+    """Edit an existing blog post."""
+
+    model = Post
+    template_name = "blog/blog_edit_form.html"
+    fields = ["title", "body", "status", "featured"]
+
+
+class DeletePost(DeleteView):
+    """Delete an existing blog post."""
+
+    model = Post
+    success_url = reverse_lazy("home_page")
