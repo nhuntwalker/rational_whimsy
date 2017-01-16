@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="img/png" href="{% static "imgs/rw_favicon.png" %}">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <title>Rational Whimsy | {% block title %}{% endblock %} </title>
+    <link rel="stylesheet" type="text/css" href="{% static "base/reset.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "base/mobile.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "base/tablet.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "base/main.css" %}">
+</head>
+<body>
+    <main>
+    <header>
+        <section id="top-logo">
+            <img src="{% static "imgs/logoblack_transparent.png" %}"/>
+        </section>
+        <nav id="mobile-menu">
+            <ul>
+                <a href="{% url 'home_page' %}">
+                <li {% if page == "home" %}class="active"{% endif %}>
+                    Home
+                </li>
+                </a>
+                <a href="#">
+                <li {% if page == "about" %}class="active"{% endif %}>
+                    About Me
+                </li>
+                </a>
+                <a href="{% url 'list_posts' %}">
+                <li {% if page == "blog" %}class="active"{% endif %}>
+                    Blog
+                </li>
+                </a>
+                <a href="#">
+                <li {% if page == "projects" %}class="active"{% endif %}>
+                    Projects
+                </li>
+                </a>
+
+            </ul>
+        </nav>
+    </header>
+    {% block content %}{% endblock %}
+    <footer>
+        Copyright &copy; 2014 Rational Whimsy
+        <nav>
+            <li>
+                <a href="http://www.twitter.com/nhuntwalker" target="_blank">Twitter</a>
+            </li>
+            <li>
+                <a href="http://www.linkedin.com/in/nhuntwalker" target="_blank">LinkedIn</a>
+            </li>
+            <li>
+                <a href="http://www.instagram.com/nhuntwalker" target="_blank">Instagram</a>
+            </li>
+            <li>
+                <a href="http://www.github.com/nhuntwalker" target="_blank">GitHub</a>
+            </li>
+        </nav>
+    </footer>
+    </main>
+</body>
+</html>

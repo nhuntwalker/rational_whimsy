@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if featured_post %}
+    <section id="featured">
+        <section id="featured-background">
+        </section>
+        <section id="featured-post">
+            <h2>{{ featured_post.title }}</h2>
+            <p>{% lorem 20 w %}</p>
+        </section>
+    </section>
+{% endif %}
+{% if posts %}
+    <h2>Posts</h2>
+    {% for post in posts %}
+        <article>{{ post.created | date:"M j, Y" }}</article>
+    {% endfor %}
+{% else %}
+    There are not yet any posts.
+{% endif %}
+{% endblock %}

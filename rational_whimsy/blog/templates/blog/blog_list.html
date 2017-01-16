@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}Blog{% endblock %}
+
+{% block content %}
+{% for post in object_list %}
+    <article>
+        <h2>{{ post.title }}</h2>
+        <p>Posted on {{ post.published_date | date:"M j, Y"}}</p>
+        <p>{{ post.body | truncatewords:100 | striptags}}</p>
+        <a href="{% url 'post_detail_slug' post.slug %}"><button>More</button></a>
+    </article>
+{% endfor %}
+{% endblock %}
