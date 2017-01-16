@@ -1,5 +1,5 @@
 """Tests of the blog app."""
-from django.test import TestCase, Client
+from django.test import TestCase, Client, RequestFactory
 from django.utils.text import slugify
 from .models import Post
 import factory
@@ -19,7 +19,8 @@ class PostFactory(factory.Factory):
     title = factory.Sequence(lambda x: "Post {} Foo".format(x))
     slug = factory.LazyAttribute(lambda x: slugify(x.title))
     body = factory.Sequence(
-        lambda x: "This is the body for post number {}".format(x))
+        lambda x: "This is the body for post number {}".format(x)
+    )
     created = datetime.datetime.now()
     modified = datetime.datetime.now()
     published_date = datetime.datetime.now()
@@ -80,8 +81,100 @@ class BlogTestCase(TestCase):
         self.assertEqual(featured.count(), 1)
 
 
-class BlogRoutesTestCase(TestCase):
+class BlogViewsUnitTests(TestCase):
     """Unit tests for the views in the Blog app."""
+
+    def setUp(self):
+        """Set up a test client."""
+        self.client = Client()
+        self.request_factory = RequestFactory()
+
+    def add_posts(self):
+        """Add some blog posts to the test DB."""
+        new_posts = [PostFactory.create() for i in range(20)]
+        for post in new_posts:
+            post.save()
+        self.new_posts = new_posts
+
+    def test_list_posts_lists_the_posts(self):
+        """The ListPosts view should actually include a list of blog posts."""
+        from blog.views import ListPosts
+        self.add_posts()
+        request = self.request_factory.get("/fake-path")
+        view = ListPosts.as_view(template_name="blog/blog_list.html")
+        response = view(request)
+        posts = response.context_data["object_list"]
+        self.assertTrue(isinstance(posts[0], Post))
+
+    def test_list_posts_has_blog_title(self):
+        """The 'page' key in the response context is 'blog'."""
+        from blog.views import ListPosts
+        request = self.request_factory.get("/fake-path")
+        view = ListPosts.as_view(template_name="blog/blog_list.html")
+        response = view(request)
+        self.assertTrue("page" in response.context_data)
+        self.assertTrue(response.context_data["page"] == "blog")
+
+    def test_post_detail_finds_primary_key(self):
+        """The post_detail view should be able to take a primary key."""
+        from blog.views import post_detail
+        self.add_posts()
+        request = self.request_factory.get("/fake-path")
+        response = post_detail(request, pk=220)
+        this_post = Post.published.get(pk=220)
+        self.assertTrue(this_post.title in str(response.content))
+
+    def test_post_detail_finds_slug(self):
+        """You should be able to use a slug with the detail view."""
+        from blog.views import post_detail
+        self.add_posts()
+        request = self.request_factory.get("/fake-path")
+        response = post_detail(request, slug=self.new_posts[0].slug)
+        self.assertTrue(response.status_code == 200)
+
+    def test_create_post_creates_a_post(self):
+        """The CreatePost view should create a new post."""
+        from blog.views import CreatePost
+        request = self.request_factory.post("/fake-path", {
+            "title": "Test Create View",
+            "body": "The body of a test post",
+            "status": "published",
+            "featured": False
+        })
+        view = CreatePost.as_view(template_name="blog/blog_form.html")
+        view(request)
+        self.assertTrue(len(Post.published.all()) == 1)
+
+    def test_edit_post_edits_existing_post(self):
+        """The EditPost view should allow you to edit an existing post."""
+        from blog.views import EditPost
+        post = PostFactory.create()
+        post.save()
+        request = self.request_factory.post("/fake-path", {
+            "title": "Edited This Post",
+            "body": post.body,
+            "status": post.status,
+            "featured": post.featured
+        })
+        view = EditPost.as_view(template_name="blog/blog_edit_form.html")
+        view(request, pk=post.id)
+        post = Post.published.first()
+        self.assertTrue(post.title == "Edited This Post")
+
+    def test_delete_post_deletes_post(self):
+        """The DeletePost view should delete the given post."""
+        from blog.views import DeletePost
+        post = PostFactory.create()
+        post.save()
+        request = self.request_factory.post("/fake-path")
+        view = DeletePost.as_view()
+        view(request, pk=post.id)
+        published = Post.published.all()
+        self.assertTrue(len(published) == 0)
+
+
+class BlogRoutesTestCase(TestCase):
+    """Unit tests for the routes in the Blog app."""
 
     def setUp(self):
         """Create new posts and set up a test client."""
@@ -100,7 +193,7 @@ class BlogRoutesTestCase(TestCase):
         # import pdb; pdb.set_trace()
         response = self.client.get("/blog/")
         self.assertEqual(len(self.new_posts),
-                         response.context["posts"].count())
+                         response.context["object_list"].count())
 
     def test_blog_roll_title_is_blog(self):
         """The title of the blog list should be blog."""

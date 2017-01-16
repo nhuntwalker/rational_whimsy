@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
+
 class ListPosts(ListView):
     """List out all of the individual posts."""
 
@@ -37,6 +38,7 @@ class CreatePost(CreateView):
     model = Post
     fields = ["title", "body", "status", "featured"]
     template_name = "blog/blog_form.html"
+    success_url = reverse_lazy("home_page")
 
 
 class EditPost(UpdateView):
@@ -45,6 +47,7 @@ class EditPost(UpdateView):
     model = Post
     template_name = "blog/blog_edit_form.html"
     fields = ["title", "body", "status", "featured"]
+    success_url = reverse_lazy("home_page")
 
 
 class DeletePost(DeleteView):

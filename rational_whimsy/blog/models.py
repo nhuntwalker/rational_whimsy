@@ -1,3 +1,4 @@
+"""The Blog Post model."""
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
@@ -12,12 +13,14 @@ PUBLICATION_STATUS = (
 
 
 class PostManager(models.Manager):
-    """Retrieve all the published posts."""
+    """Retrieve all the published posts in reverse date order."""
 
     def get_queryset(self):
         """Alter the queryset returned."""
-        return super(PostManager,
-                     self).get_queryset().filter(status="published").order_by("-created")
+        return super(
+            PostManager,
+            self
+        ).get_queryset().filter(status="published").order_by("-created")
 
 
 class Post(models.Model):
@@ -26,7 +29,11 @@ class Post(models.Model):
     title = models.CharField(name="title", max_length=255)
     body = models.TextField(name="body")
     created = models.DateTimeField(name="created", auto_now_add=True)
-    published_date = models.DateTimeField(name="published_date", blank=True, null=True)
+    published_date = models.DateTimeField(
+        name="published_date",
+        blank=True,
+        null=True
+    )
     modified = models.DateTimeField(name="modified", auto_now=True)
     slug = models.SlugField(max_length=255, unique=True)
 
@@ -45,7 +52,11 @@ class Post(models.Model):
 
 @receiver(post_save, sender=Post)
 def unfeature_posts(sender, **kwargs):
-    """When a post is saved or edited and it's a featured post make all others no longer featured."""
+    """Reset feature status when saved post is featured.
+
+    When a post is saved (either added or edited), if it's checked as being
+    featured then make every/any other featured post unfeatured.
+    """
     if kwargs["instance"].featured:
         other_posts = Post.objects.exclude(pk=kwargs["instance"].pk)
         for post in other_posts:
