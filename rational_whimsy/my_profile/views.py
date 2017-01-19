@@ -1,3 +1,4 @@
+"""Views for the Profile app."""
 from django.shortcuts import render
 from my_profile.models import NMHWProfile
 from django.views.generic.edit import UpdateView

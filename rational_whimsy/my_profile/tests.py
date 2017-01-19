@@ -11,11 +11,9 @@ fake = Faker()
 
 
 class UserFactory(factory.Factory):
-
     """Generate new User objects."""
 
     class Meta:
-
         """Define the model to base the factory on."""
 
         model = User
@@ -27,7 +25,6 @@ class UserFactory(factory.Factory):
 
 
 class ProfileModelTests(TestCase):
-
     """Tests of the profile model object."""
 
     def setUp(self):
@@ -54,7 +51,6 @@ class ProfileModelTests(TestCase):
 
 
 class ProfileViewTests(TestCase):
-
     """Tests for views associated with the profile model."""
 
     def setUp(self):
@@ -78,4 +74,5 @@ class ProfileViewTests(TestCase):
 
     def test_profile_detail_view_accesses_profile(self):
         """All of my profile's details should be in the view's context."""
-        response = self.client.get("/")
+        response = self.client.get("/about_me")
+        self.assertTrue(response.context["profile"] == self.profile)

@@ -17,12 +17,13 @@ from django.conf import settings
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
-from .views import home_view
+from rational_whimsy.views import home_view
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^blog/', include("blog.urls")),
-    url(r'^$', home_view, name="home_page")
+    url(r'^$', home_view, name="home_page"),
+    url(r'^about_me$', include("my_profile.urls"))
 ]
 
 if settings.DEBUG:
