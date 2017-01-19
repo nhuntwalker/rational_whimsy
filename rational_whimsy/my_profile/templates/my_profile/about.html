@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block title %}About Me{% endblock %}
+
+{% block content %}
+
+
+<div>
+<h2>Find Me</h2>
+<ul>
+    <li>GitHub: <a href="https://www.github.com/{{ profile.github }}">click</a></li>    
+    <li>LinkedIn: <a href="https://www.linkedin.com/in/{{ profile.linkedin }}">click</a></li>
+    <li>Twitter: <a href="https://www.twitter.com/{{ profile.twitter }}">click</a></li>
+    <li>Instagram: <a href="https://www.instagram.com/{{ profile.instagram }}">click</a></li>
+</ul>
+</div>
+{% endblock %}
