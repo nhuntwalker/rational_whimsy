@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from my_profile.models import NMHWProfile
 from django.views.generic.edit import UpdateView
+from django.urls import reverse_lazy
 
 # Create your views here.
 
@@ -19,3 +20,4 @@ class EditProfile(UpdateView):
     template_name = "my_profile/profile_edit_form.html"
     fields = ["photo", "linkedin", "github", "twitter",
               "facebook", "instagram", "description"]
+    success_url = reverse_lazy("profile")

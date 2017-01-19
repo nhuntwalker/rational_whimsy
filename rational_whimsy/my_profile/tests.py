@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from my_profile.models import NMHWProfile
 import factory
 from faker import Faker
+from django.forms import ModelForm
 
 fake = Faker()
 
@@ -61,12 +62,12 @@ class ProfileViewTests(TestCase):
         self.profile = self.user.profile
         self.client = Client()
         self.request = RequestFactory()
+        self.get_req = RequestFactory().get("/foo_path")
 
     def test_profile_detail_view_has_details(self):
         """Information from the profile should be in the response."""
         from my_profile.views import profile_detail
-        request = self.request.get("/foo_path")
-        response = profile_detail(request)
+        response = profile_detail(self.get_req)
         self.assertIn(self.profile.linkedin, str(response.content))
         self.assertIn(self.profile.twitter, str(response.content))
         self.assertIn(self.profile.github, str(response.content))
@@ -76,3 +77,42 @@ class ProfileViewTests(TestCase):
         """All of my profile's details should be in the view's context."""
         response = self.client.get("/about_me")
         self.assertTrue(response.context["profile"] == self.profile)
+
+    def test_profile_detail_view_accesses_correct_template(self):
+        """The detail view should use the my_profile/about.html template."""
+        response = self.client.get("/about_me")
+        self.assertTemplateUsed(response, "my_profile/about.html")
+
+    def test_profile_edit_get_is_form(self):
+        """A simple get request returns a form."""
+        from my_profile.views import EditProfile
+        view = EditProfile.as_view()
+        response = view(self.get_req, pk=self.user.id)
+        self.assertTrue("form" in response.context_data)
+        self.assertIsInstance(response.context_data["form"], ModelForm)
+
+    def test_profile_edit_form_has_appropriate_fields(self):
+        """A get request returns a form with the right fields."""
+        from my_profile.views import EditProfile
+        view = EditProfile.as_view()
+        response = view(self.get_req, pk=self.user.id)
+        the_form = response.context_data["form"]
+        desired_fields = ["photo", "linkedin", "github", "twitter",
+                          "facebook", "instagram", "description"]
+        for field in desired_fields:
+            self.assertIn(field, the_form.fields)
+
+    def test_profile_edit_form_with_post_redirects_on_success(self):
+        """Submitting a POST request to the edit view redirects on success."""
+        from my_profile.views import EditProfile
+        view = EditProfile.as_view()
+        response = view(self.request.post("/foo_path", {
+            "photo": "",
+            "linkedin": "",
+            "github": "",
+            "twitter": "",
+            "facebook": "",
+            "instagram": "",
+            "description": "pancakes"
+        }), pk=self.user.id)
+        self.assertTrue(response.status_code == 302)
