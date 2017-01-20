@@ -1,7 +1,7 @@
 """Tests of the blog app."""
 from django.test import TestCase, Client, RequestFactory
 from django.utils.text import slugify
-from .models import Post
+from blog.models import Post
 import factory
 import datetime
 
