@@ -60,6 +60,7 @@ class ProfileViewTests(TestCase):
         """Set up a test user, profile, client, and requests."""
         self.user = UserFactory.create()
         self.user.username = "nhuntwalker"
+        self.user.set_password("potatoes")
         self.user.save()
         self.profile = self.user.profile
         self.client = Client()
@@ -166,3 +167,35 @@ class ProfileViewTests(TestCase):
         })
         profile = NMHWProfile.objects.get(user__username="nhuntwalker")
         self.assertTrue(profile.description == "pancakes")
+
+    def test_profile_login_route_get_shows_form(self):
+        """A get request to the login route shows a login form."""
+        response = self.client.get(reverse_lazy("login"))
+        html = BeautifulSoup(response.content, "html5lib")
+        self.assertTrue(html.find("form") is not None)
+
+    def test_profile_login_route_has_proper_input_fields(self):
+        """A get request shows all the proper fields, with required parts."""
+        response = self.client.get(reverse_lazy("login"))
+        html = BeautifulSoup(response.content, "html5lib")
+        fields = ["username", "password"]
+        for field in fields:
+            self.assertTrue(html.find("input", {"name": field}) is not None)
+        btn = html.find("input", {"name": "submit"})
+        self.assertTrue(btn.attrs["value"] == "Log In")
+
+    def test_profile_login_route_redirects(self):
+        """When logging in with good credentials we redirect."""
+        response = self.client.post(reverse_lazy("login"), {
+            "username": self.user.username,
+            "password": "potatoes"
+        })
+        self.assertTrue(response.status_code == 302)
+
+    def test_profile_login_route_redirects_to_home(self):
+        """When logging in with good credentials we reach home page."""
+        response = self.client.post(reverse_lazy("login"), {
+            "username": self.user.username,
+            "password": "potatoes"
+        })
+        self.assertTrue(response.url == reverse_lazy("home"))
