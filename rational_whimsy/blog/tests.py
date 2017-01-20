@@ -120,8 +120,8 @@ class BlogViewsUnitTests(TestCase):
         from blog.views import post_detail
         self.add_posts()
         request = self.request_factory.get("/fake-path")
-        response = post_detail(request, pk=220)
-        this_post = Post.published.get(pk=220)
+        response = post_detail(request, pk=204)
+        this_post = Post.published.get(pk=204)
         self.assertTrue(this_post.title in str(response.content))
 
     def test_post_detail_finds_slug(self):
@@ -217,6 +217,3 @@ class BlogRoutesTestCase(TestCase):
         for post in self.new_posts:
             response = self.client.get("/blog/{}".format(post.pk))
             self.assertEqual(response.status_code, 200)
-
-    def test_thing(self):
-        self.asserTrue(True)
