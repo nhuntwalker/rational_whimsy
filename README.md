@@ -1,5 +1,7 @@
 # Rational Whimsy
 
+[![Build Status](https://travis-ci.org/nhuntwalker/rational_whimsy.svg?branch=master)](https://travis-ci.org/nhuntwalker/rational_whimsy)
+
 **Author**: Nicholas Hunt-Walker
 
 This is the code that builds my website, http://www.rationalwhimsy.com.
