@@ -13,4 +13,4 @@ install:
 
 script:
   - python rational_whimsy/manage.py migrate
-  - python rational_whimsy/manage.py test rationalwhimsy
+  - python rational_whimsy/manage.py test rational_whimsy
