@@ -1,0 +1,16 @@
+language: python
+python:
+  - "3.5"
+
+services:
+  - postgresql
+
+before_script:
+  - psql -c "create database rationalwhimsy;" -U postgres
+
+install:
+  - pip install -r requirements.pip
+
+script:
+  - python rationalwhimsy/manage.py migrate
+  - python rationalwhimsy/manage.py test rationalwhimsy
