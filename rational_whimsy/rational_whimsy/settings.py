@@ -81,7 +81,7 @@ DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": "rationalwhimsy",
-        "HOST": "localhost",
+        "HOST": os.environ.get("DB_HOST", "localhost"),
     }
 }
 
