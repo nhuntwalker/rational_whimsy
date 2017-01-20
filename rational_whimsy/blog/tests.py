@@ -217,3 +217,6 @@ class BlogRoutesTestCase(TestCase):
         for post in self.new_posts:
             response = self.client.get("/blog/{}".format(post.pk))
             self.assertEqual(response.status_code, 200)
+
+    def test_thing(self):
+        self.asserTrue(True)
