@@ -1,12 +1,15 @@
 """Tests for the Profile model and related views."""
 from django.test import TestCase, Client, RequestFactory
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user
+from django.contrib.auth.models import User, AnonymousUser
 from my_profile.models import NMHWProfile
 import factory
 from faker import Faker
 from django.forms import ModelForm
 from django.urls import reverse_lazy
 from bs4 import BeautifulSoup
+from django.contrib.sessions.middleware import SessionMiddleware
+
 
 fake = Faker()
 
@@ -60,11 +63,19 @@ class ProfileViewTests(TestCase):
         """Set up a test user, profile, client, and requests."""
         self.user = UserFactory.create()
         self.user.username = "nhuntwalker"
+        self.user.set_password("potatoes")
         self.user.save()
         self.profile = self.user.profile
         self.client = Client()
         self.request = RequestFactory()
         self.get_req = RequestFactory().get("/foo_path")
+
+    def add_session_middleware(self, request):
+        """Need to add session middleware for authentication."""
+        mdl = SessionMiddleware()
+        mdl.process_request(request)
+        request.session.save()
+        request.user = self.user
 
     def test_profile_detail_view_has_details(self):
         """Information from the profile should be in the response."""
@@ -85,9 +96,50 @@ class ProfileViewTests(TestCase):
         response = self.client.get(reverse_lazy("profile"))
         self.assertTemplateUsed(response, "my_profile/about.html")
 
+    def test_profile_login_route_get_shows_form(self):
+        """A get request to the login route shows a login form."""
+        response = self.client.get(reverse_lazy("login"))
+        html = BeautifulSoup(response.content, "html5lib")
+        self.assertTrue(html.find("form") is not None)
+
+    def test_profile_login_route_has_proper_input_fields(self):
+        """A get request shows all the proper fields, with required parts."""
+        response = self.client.get(reverse_lazy("login"))
+        html = BeautifulSoup(response.content, "html5lib")
+        fields = ["username", "password"]
+        for field in fields:
+            self.assertTrue(html.find("input", {"name": field}) is not None)
+        btn = html.find("input", {"name": "submit"})
+        self.assertTrue(btn.attrs["value"] == "Log In")
+
+    def test_profile_login_route_redirects(self):
+        """When logging in with good credentials we redirect."""
+        response = self.client.post(reverse_lazy("login"), {
+            "username": self.user.username,
+            "password": "potatoes"
+        })
+        self.assertTrue(response.status_code == 302)
+
+    def test_profile_login_route_redirects_to_home(self):
+        """When logging in with good credentials we reach home page."""
+        response = self.client.post(reverse_lazy("login"), {
+            "username": self.user.username,
+            "password": "potatoes"
+        })
+        self.assertTrue(response.url == reverse_lazy("home_page"))
+
+    def test_profile_login_route_logs_in_users(self):
+        """A logged in user is authenticated."""
+        self.client.post(reverse_lazy("login"), {
+            "username": self.user.username,
+            "password": "potatoes"
+        })
+        self.assertTrue(self.user.is_authenticated)
+
     def test_profile_edit_get_is_form(self):
         """A simple get request returns a form in HTML."""
         from my_profile.views import profile_edit
+        self.get_req.user = self.user
         response = profile_edit(self.get_req)
         html = BeautifulSoup(response.content, "html5lib")
         self.assertTrue(len(html.find_all("form")) == 1)
@@ -95,6 +147,7 @@ class ProfileViewTests(TestCase):
     def test_profile_edit_form_has_fields(self):
         """A GET request returns all the form fields."""
         from my_profile.views import profile_edit
+        self.get_req.user = self.user
         response = profile_edit(self.get_req)
         html = BeautifulSoup(response.content, "html5lib")
         desired_fields = ["linkedin", "github", "twitter",
@@ -105,15 +158,16 @@ class ProfileViewTests(TestCase):
                                   {"name": "description"}) is not None)
         self.assertTrue(html.find("select", {"name": "photo"}) is not None)
 
-    def test_profile_response_has_form_in_context(self):
+    def test_profile_edit_response_has_form_in_context(self):
         """A get request returns a form object in the context."""
+        self.client.force_login(self.user)
         response = self.client.get(reverse_lazy("profile_edit"))
         self.assertIsInstance(response.context["form"], ModelForm)
 
     def test_profile_edit_form_with_post_redirects_on_success(self):
         """A post request redirects on success."""
         from my_profile.views import profile_edit
-        response = profile_edit(self.request.post("/foo_path", {
+        post_req = self.request.post("/foo_path", {
             "photo": "",
             "linkedin": "",
             "github": "",
@@ -121,11 +175,14 @@ class ProfileViewTests(TestCase):
             "facebook": "",
             "instagram": "",
             "description": "pancakes"
-        }))
+        })
+        post_req.user = self.user
+        response = profile_edit(post_req)
         self.assertTrue(response.status_code == 302)
 
     def test_profile_edit_route_with_post_redirects_to_profile(self):
         """A post request redirects to the profile page."""
+        self.client.force_login(self.user)
         response = self.client.post(reverse_lazy("profile_edit"), {
             "photo": "",
             "linkedin": "",
@@ -141,7 +198,7 @@ class ProfileViewTests(TestCase):
     def test_profile_edit_view_with_post_changes_model_attrs(self):
         """A post request to edit view changes the model attributes."""
         from my_profile.views import profile_edit
-        profile_edit(self.request.post("/foo_path", {
+        post_req = self.request.post("/foo_path", {
             "photo": "",
             "linkedin": "",
             "github": "",
@@ -149,12 +206,15 @@ class ProfileViewTests(TestCase):
             "facebook": "",
             "instagram": "",
             "description": "pancakes"
-        }))
+        })
+        post_req.user = self.user
+        profile_edit(post_req)
         profile = NMHWProfile.objects.get(user__username="nhuntwalker")
         self.assertTrue(profile.description == "pancakes")
 
     def test_profile_edit_route_with_post_changes_model_attrs(self):
         """A post request to the edit route changes the model attributes."""
+        self.client.force_login(self.user)
         self.client.post(reverse_lazy("profile_edit"), {
             "photo": "",
             "linkedin": "",
@@ -166,3 +226,14 @@ class ProfileViewTests(TestCase):
         })
         profile = NMHWProfile.objects.get(user__username="nhuntwalker")
         self.assertTrue(profile.description == "pancakes")
+
+    def test_unauthenticated_user_profile_edit_route_redirects_login(self):
+        """An unauthenticated user must be diverted from the edit route."""
+        response = self.client.get(reverse_lazy("profile_edit"), follow=True)
+        self.assertTrue(response.request["PATH_INFO"] == reverse_lazy("login"))
+
+    def test_authorized_user_is_logged_out(self):
+        """When a user is authenticated, logging them out logs them out."""
+        self.client.force_login(self.user)
+        response = self.client.get(reverse_lazy("logout"), follow=True)
+        self.assertIsInstance(get_user(response.wsgi_request), AnonymousUser)

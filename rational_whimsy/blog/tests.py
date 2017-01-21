@@ -1,11 +1,17 @@
 """Tests of the blog app."""
 from django.test import TestCase, Client, RequestFactory
+from django.urls import reverse_lazy
 from django.utils.text import slugify
 from blog.models import Post
+from django.contrib.auth.models import User
 import factory
 import datetime
+from bs4 import BeautifulSoup
+from faker import Faker
 
 # Create your tests here.
+
+fake = Faker()
 
 
 class PostFactory(factory.Factory):
@@ -88,6 +94,11 @@ class BlogViewsUnitTests(TestCase):
         """Set up a test client."""
         self.client = Client()
         self.request_factory = RequestFactory()
+        self.get_request = RequestFactory().get("/foo_path")
+        user = User()
+        user.username = "test_user"
+        user.set_password("potatoes")
+        self.user = user
 
     def add_posts(self):
         """Add some blog posts to the test DB."""
@@ -120,8 +131,8 @@ class BlogViewsUnitTests(TestCase):
         from blog.views import post_detail
         self.add_posts()
         request = self.request_factory.get("/fake-path")
-        response = post_detail(request, pk=204)
-        this_post = Post.published.get(pk=204)
+        response = post_detail(request, pk=self.new_posts[0].id)
+        this_post = Post.published.get(pk=self.new_posts[0].id)
         self.assertTrue(this_post.title in str(response.content))
 
     def test_post_detail_finds_slug(self):
@@ -131,19 +142,6 @@ class BlogViewsUnitTests(TestCase):
         request = self.request_factory.get("/fake-path")
         response = post_detail(request, slug=self.new_posts[0].slug)
         self.assertTrue(response.status_code == 200)
-
-    def test_create_post_creates_a_post(self):
-        """The CreatePost view should create a new post."""
-        from blog.views import CreatePost
-        request = self.request_factory.post("/fake-path", {
-            "title": "Test Create View",
-            "body": "The body of a test post",
-            "status": "published",
-            "featured": False
-        })
-        view = CreatePost.as_view(template_name="blog/blog_form.html")
-        view(request)
-        self.assertTrue(len(Post.published.all()) == 1)
 
     def test_edit_post_edits_existing_post(self):
         """The EditPost view should allow you to edit an existing post."""
@@ -156,6 +154,7 @@ class BlogViewsUnitTests(TestCase):
             "status": post.status,
             "featured": post.featured
         })
+        request.user = self.user
         view = EditPost.as_view(template_name="blog/blog_edit_form.html")
         view(request, pk=post.id)
         post = Post.published.first()
@@ -167,10 +166,25 @@ class BlogViewsUnitTests(TestCase):
         post = PostFactory.create()
         post.save()
         request = self.request_factory.post("/fake-path")
+        request.user = self.user
         view = DeletePost.as_view()
         view(request, pk=post.id)
         published = Post.published.all()
         self.assertTrue(len(published) == 0)
+
+    def test_create_post_creates_a_post(self):
+        """The CreatePost view should create a new post."""
+        from blog.views import CreatePost
+        request = self.request_factory.post("/fake-path", {
+            "title": "Test Create View",
+            "body": "The body of a test post",
+            "status": "published",
+            "featured": False
+        })
+        request.user = self.user
+        view = CreatePost.as_view(template_name="blog/blog_form.html")
+        view(request)
+        self.assertTrue(len(Post.published.all()) == 1)
 
 
 class BlogRoutesTestCase(TestCase):
@@ -182,38 +196,184 @@ class BlogRoutesTestCase(TestCase):
         for post in self.new_posts:
             post.save()
         self.client = Client()
+        user = User(username="test_user")
+        user.set_password("potatoes")
+        user.save()
+        self.user = user
 
     def test_blog_list_returns_200(self):
         """Hitting the blog route returns a status 200."""
-        response = self.client.get("/blog/")
+        response = self.client.get(reverse_lazy("list_posts"))
         self.assertEqual(response.status_code, 200)
 
     def test_list_posts_gets_published_posts(self):
         """The posts in the context of the list view are all published."""
         # import pdb; pdb.set_trace()
-        response = self.client.get("/blog/")
+        response = self.client.get(reverse_lazy("list_posts"))
         self.assertEqual(len(self.new_posts),
                          response.context["object_list"].count())
 
     def test_blog_roll_title_is_blog(self):
         """The title of the blog list should be blog."""
-        response = self.client.get("/blog/")
+        response = self.client.get(reverse_lazy("list_posts"))
         self.assertEqual(response.context["page"], "blog")
 
     def test_blog_roll_uses_right_template(self):
         """The blog roll should use the blog_list template."""
-        response = self.client.get("/blog/")
+        response = self.client.get(reverse_lazy("list_posts"))
         self.assertTemplateUsed(response, "layout.html")
         self.assertTemplateUsed(response, "blog/blog_list.html")
 
     def test_every_blog_detail_slug_returns_200(self):
         """Hitting the detail route for every post returns a status 200."""
         for post in self.new_posts:
-            response = self.client.get("/blog/{}".format(post.slug))
+            response = self.client.get(
+                reverse_lazy(
+                    "post_detail_slug",
+                    kwargs={"slug": post.slug}
+                )
+            )
             self.assertEqual(response.status_code, 200)
 
     def test_every_blog_detail_pk_returns_200(self):
         """Hitting the detail route for every post using the pk is 200."""
         for post in self.new_posts:
-            response = self.client.get("/blog/{}".format(post.pk))
+            response = self.client.get(
+                reverse_lazy(
+                    "post_detail_pk",
+                    kwargs={"pk": post.pk}
+                )
+            )
             self.assertEqual(response.status_code, 200)
+
+    def test_create_route_has_form(self):
+        """The create route has the appropriate form."""
+        self.client.force_login(self.user)
+        response = self.client.get(reverse_lazy("create_posts"))
+        html = BeautifulSoup(response.content, "html5lib")
+        self.assertTrue(html.find("form") is not None)
+
+    def test_create_route_has_form_fields(self):
+        """Create route has necessary fields for blog posts."""
+        self.client.force_login(self.user)
+        response = self.client.get(reverse_lazy("create_posts"))
+        html = BeautifulSoup(response.content, "html5lib")
+        self.assertTrue(html.find("input", {"name": "title"}) is not None)
+        self.assertTrue(html.find("textarea", {"name": "body"}))
+
+    def test_create_route_post_makes_new_post(self):
+        """Create route makes a new post."""
+        self.client.force_login(self.user)
+        self.client.post(reverse_lazy("create_posts"), {
+            "title": "Foo the Bar",
+            "body": fake.paragraph(),
+            "status": "draft"
+        })
+        self.assertTrue(Post.objects.count() == 21)
+
+    def test_create_route_redirects_after_new_post(self):
+        """Create route redirects after saving."""
+        self.client.force_login(self.user)
+        response = self.client.post(reverse_lazy("create_posts"), {
+            "title": "Foo the Bar",
+            "body": fake.paragraph(),
+            "status": "draft"
+        })
+        self.assertTrue(response.status_code == 302)
+
+    def test_edit_route_has_form(self):
+        """."""
+        self.client.force_login(self.user)
+        this_post = self.new_posts[0]
+        response = self.client.get(
+            reverse_lazy("edit_post", kwargs={"pk": this_post.id})
+        )
+        html = BeautifulSoup(response.content, "html5lib")
+        self.assertTrue(html.find("form") is not None)
+
+    def test_edit_route_has_fields(self):
+        """."""
+        self.client.force_login(self.user)
+        this_post = self.new_posts[0]
+        response = self.client.get(
+            reverse_lazy("edit_post", kwargs={"pk": this_post.id})
+        )
+        html = BeautifulSoup(response.content, "html5lib")
+        self.assertTrue(html.find("input", {"name": "title"}) is not None)
+        self.assertTrue(html.find("textarea", {"name": "body"}))
+
+    def test_edit_route_post_redirects(self):
+        """."""
+        self.client.force_login(self.user)
+        this_post = self.new_posts[0]
+        response = self.client.post(
+            reverse_lazy("edit_post", kwargs={"pk": this_post.id}),
+            {
+                "title": "Foo the Bar",
+                "body": fake.paragraph(),
+                "status": "draft"
+            })
+        self.assertTrue(response.status_code == 302)
+
+    def test_edit_route_post_redirects_to_list_page(self):
+        """."""
+        self.client.force_login(self.user)
+        this_post = self.new_posts[0]
+        response = self.client.post(
+            reverse_lazy("edit_post", kwargs={"pk": this_post.id}),
+            {
+                "title": "Foo the Bar",
+                "body": fake.paragraph(),
+                "status": "draft"
+            }, follow=True)
+        chain = response.redirect_chain
+        self.assertTrue(reverse_lazy("list_posts") in chain[0])
+
+    def test_delete_route_is_ok(self):
+        """."""
+        self.client.force_login(self.user)
+        this_post = self.new_posts[0]
+        response = self.client.get(
+            reverse_lazy("delete_post", kwargs={"pk": this_post.id})
+        )
+        self.assertTrue(response.status_code == 200)
+
+    def test_delete_route_confirms_delete(self):
+        """."""
+        self.client.force_login(self.user)
+        this_post = self.new_posts[0]
+        response = self.client.get(
+            reverse_lazy("delete_post", kwargs={"pk": this_post.id})
+        )
+        check_str = "Are you sure you want to delete"
+        self.assertTrue(check_str in str(response.content))
+
+    def test_delete_route_post_removes_object(self):
+        """."""
+        self.client.force_login(self.user)
+        this_post = self.new_posts[0]
+        self.client.post(
+            reverse_lazy("delete_post", kwargs={"pk": this_post.id})
+        )
+        self.assertTrue(Post.objects.count() == 19)
+
+    def test_delete_route_post_redirects(self):
+        """."""
+        self.client.force_login(self.user)
+        this_post = self.new_posts[0]
+        response = self.client.post(
+            reverse_lazy("delete_post", kwargs={"pk": this_post.id})
+        )
+        self.assertTrue(response.status_code == 302)
+
+    def test_delete_route_post_redirects_to_post_list(self):
+        """."""
+        self.client.force_login(self.user)
+        this_post = self.new_posts[0]
+        response = self.client.post(
+            reverse_lazy("delete_post",
+                         kwargs={"pk": this_post.id}),
+            follow=True
+        )
+        chain = response.redirect_chain
+        self.assertTrue(reverse_lazy("list_posts") in chain[0])

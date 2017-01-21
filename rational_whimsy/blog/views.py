@@ -1,6 +1,8 @@
 """Views for the blog app."""
-from django.shortcuts import render
 from blog.models import Post
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -32,26 +34,32 @@ def post_detail(request, pk=None, slug=None):
     })
 
 
-class CreatePost(CreateView):
+class CreatePost(LoginRequiredMixin, CreateView):
     """Create a new blog post."""
 
     model = Post
     fields = ["title", "body", "status", "featured"]
     template_name = "blog/blog_form.html"
-    success_url = reverse_lazy("home_page")
+    success_url = reverse_lazy("list_posts")
+    login_url = reverse_lazy("login")
+    redirect_field_name = "redirect_to"
 
 
-class EditPost(UpdateView):
+class EditPost(LoginRequiredMixin, UpdateView):
     """Edit an existing blog post."""
 
     model = Post
     template_name = "blog/blog_edit_form.html"
     fields = ["title", "body", "status", "featured"]
-    success_url = reverse_lazy("home_page")
+    success_url = reverse_lazy("list_posts")
+    login_url = reverse_lazy("login")
+    redirect_field_name = "redirect_to"
 
 
-class DeletePost(DeleteView):
+class DeletePost(LoginRequiredMixin, DeleteView):
     """Delete an existing blog post."""
 
     model = Post
-    success_url = reverse_lazy("home_page")
+    success_url = reverse_lazy("list_posts")
+    login_url = reverse_lazy("login")
+    redirect_field_name = "redirect_to"
