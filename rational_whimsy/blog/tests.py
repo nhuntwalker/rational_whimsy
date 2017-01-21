@@ -1,5 +1,6 @@
 """Tests of the blog app."""
 from django.test import TestCase, Client, RequestFactory
+from django.urls import reverse_lazy
 from django.utils.text import slugify
 from blog.models import Post
 import factory
@@ -185,35 +186,46 @@ class BlogRoutesTestCase(TestCase):
 
     def test_blog_list_returns_200(self):
         """Hitting the blog route returns a status 200."""
-        response = self.client.get("/blog/")
+        response = self.client.get(reverse_lazy("list_posts"))
         self.assertEqual(response.status_code, 200)
 
     def test_list_posts_gets_published_posts(self):
         """The posts in the context of the list view are all published."""
         # import pdb; pdb.set_trace()
-        response = self.client.get("/blog/")
+        response = self.client.get(reverse_lazy("list_posts"))
         self.assertEqual(len(self.new_posts),
                          response.context["object_list"].count())
 
     def test_blog_roll_title_is_blog(self):
         """The title of the blog list should be blog."""
-        response = self.client.get("/blog/")
+        response = self.client.get(reverse_lazy("list_posts"))
         self.assertEqual(response.context["page"], "blog")
 
     def test_blog_roll_uses_right_template(self):
         """The blog roll should use the blog_list template."""
-        response = self.client.get("/blog/")
+        response = self.client.get(reverse_lazy("list_posts"))
         self.assertTemplateUsed(response, "layout.html")
         self.assertTemplateUsed(response, "blog/blog_list.html")
 
     def test_every_blog_detail_slug_returns_200(self):
         """Hitting the detail route for every post returns a status 200."""
         for post in self.new_posts:
-            response = self.client.get("/blog/{}".format(post.slug))
+            # response = self.client.get("/blog/{}".format(post.slug))
+            response = self.client.get(
+                reverse_lazy(
+                    "post_detail_slug",
+                    kwargs={"slug": post.slug}
+                )
+            )
             self.assertEqual(response.status_code, 200)
 
     def test_every_blog_detail_pk_returns_200(self):
         """Hitting the detail route for every post using the pk is 200."""
         for post in self.new_posts:
-            response = self.client.get("/blog/{}".format(post.pk))
+            response = self.client.get(
+                reverse_lazy(
+                    "post_detail_pk",
+                    kwargs={"pk": post.pk}
+                )
+            )
             self.assertEqual(response.status_code, 200)
