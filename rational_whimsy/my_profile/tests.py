@@ -1,6 +1,7 @@
 """Tests for the Profile model and related views."""
 from django.test import TestCase, Client, RequestFactory
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user
+from django.contrib.auth.models import User, AnonymousUser
 from my_profile.models import NMHWProfile
 import factory
 from faker import Faker
@@ -227,6 +228,12 @@ class ProfileViewTests(TestCase):
         self.assertTrue(profile.description == "pancakes")
 
     def test_unauthenticated_user_profile_edit_route_redirects_login(self):
-        """."""
+        """An unauthenticated user must be diverted from the edit route."""
         response = self.client.get(reverse_lazy("profile_edit"), follow=True)
         self.assertTrue(response.request["PATH_INFO"] == reverse_lazy("login"))
+
+    def test_authorized_user_is_logged_out(self):
+        """When a user is authenticated, logging them out logs them out."""
+        self.client.force_login(self.user)
+        response = self.client.get(reverse_lazy("logout"), follow=True)
+        self.assertIsInstance(get_user(response.wsgi_request), AnonymousUser)
