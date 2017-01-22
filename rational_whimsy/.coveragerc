@@ -1,0 +1,15 @@
+[run]
+source =
+    rational_whimsy
+
+omit = 
+    */migrations/*
+    */tests.py
+    manage.py
+    rational_whimsy/wsgi.py
+    */apps.py
+    ../bin
+    ../lib
+
+[report]
+show_missing = True
