@@ -14,7 +14,7 @@ install:
 script:
   - cd rational_whimsy
   - python manage.py migrate
-  - python manage.py test rational_whimsy
+  - python manage.py test
   - cp .coverage ../
 
 after_script: coveralls
