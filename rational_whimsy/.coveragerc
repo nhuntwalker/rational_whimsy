@@ -1,6 +1,8 @@
 [run]
 source =
     rational_whimsy
+    blog
+    my_profile
 
 omit = 
     */migrations/*
