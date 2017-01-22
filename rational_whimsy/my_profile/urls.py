@@ -7,5 +7,5 @@ from my_profile.views import (
 
 urlpatterns = [
     url(r'^$', profile_detail, name="profile"),
-    url(r'^/edit$', profile_edit, name="profile_edit"),
+    url(r'^edit$', profile_edit, name="profile_edit"),
 ]
