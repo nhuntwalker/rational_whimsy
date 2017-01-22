@@ -10,6 +10,7 @@ before_script:
 
 install:
   - pip install -r requirements.pip
+  - pip install coveralls
 
 script:
   - cd rational_whimsy
