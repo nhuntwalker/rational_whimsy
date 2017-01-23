@@ -5,7 +5,8 @@ from .models import Post
 
 class PostAdmin(admin.ModelAdmin):
     """Handle how the Post model appears in the admin."""
-    fields = ("title", "slug", "published_date", "body", "status", "featured")
+
+    fields = ("cover_img", "title", "slug", "published_date", "body", "status", "featured")
     list_display = ("title", "slug", "created", "status")
     prepopulated_fields = {"slug": ("title",)}
 

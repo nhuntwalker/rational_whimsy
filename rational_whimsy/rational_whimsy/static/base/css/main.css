@@ -7,6 +7,12 @@
 .clearfix {
     clear: both;
 }
+.mobile-only {
+    display: none;
+}
+.desktop-only {
+    display: block;
+}
 
 #mobile-menu a,
 #main-menu a {
@@ -15,7 +21,7 @@
 
 #mobile-menu a li,
 #main-menu a li {
-    color: #2ec3ac;
+    color: #02bde5;
     text-transform: uppercase;
 }
 
@@ -64,12 +70,11 @@
     padding: 3% 6%;
     border-style: solid;
     font-family: helvetica;
-    text-transform: uppercase;
     font-weight: 500;
     letter-spacing: 0.5px;
 }
 .more-btn.green-btn {
-    background-color: #2ec3ac;
+    background-color: #02bde5;
     color: white;
     border-color: white;
 }
@@ -78,6 +83,44 @@
     color: white;
     border-color: white;
 }
+.more-btn.white-btn {
+    background-color: white;
+    color: #02bde5;
+    border-color: #02bde5;
+    font-weight: 100;
+}
 .feature-btn {
     margin: 8% auto;
+    text-transform: uppercase;
+}
+.list-btn {
+    margin: 8% auto;
+}
+
+#copybox {
+    color: white;
+    background-color: #2e313d;
+    font-weight: 500;
+    text-align: center;
+    padding: 30px 0;
+}
+#copyline {
+    margin-bottom: 20px;
+    line-height: 1.5em;
+}
+#footer-social li {
+    display: inline-block;
+    background-color: #F0563D;
+    border-radius: 100%;
+    padding: 10px 12px;
+    border: 1px solid white;
+}
+#footer-social a {
+    color: white;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+#content {
+    margin-bottom: 10px;
 }

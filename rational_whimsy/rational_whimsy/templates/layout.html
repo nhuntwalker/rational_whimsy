@@ -6,9 +6,8 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
     <title>Rational Whimsy | {% block title %}{% endblock %} </title>
     <link rel="stylesheet" type="text/css" href="{% static "base/css/reset.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static "base/css/mobile.css" %}">
-    <link rel="stylesheet" type="text/css" href="{% static "base/css/tablet.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "base/css/main.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "base/css/mobile.css" %}">
     <script src="https://use.fontawesome.com/4d0cb8d848.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
@@ -55,21 +54,51 @@
     {% block content %}{% endblock %}
     </section>
     <footer>
-        Copyright &copy; 2014 Rational Whimsy
-        <nav>
-            <li>
-                <a href="http://www.twitter.com/nhuntwalker" target="_blank">Twitter</a>
-            </li>
-            <li>
-                <a href="http://www.linkedin.com/in/nhuntwalker" target="_blank">LinkedIn</a>
-            </li>
-            <li>
-                <a href="http://www.instagram.com/nhuntwalker" target="_blank">Instagram</a>
-            </li>
-            <li>
-                <a href="http://www.github.com/nhuntwalker" target="_blank">GitHub</a>
-            </li>
+        <nav id="footer-nav" class="desktop-only">
+            <ul>
+                <a href="{% url 'home_page' %}">
+                    <li>Home</li>
+                </a>
+                <a href="{% url 'list_posts' %}">
+                    <li>Blog</li>
+                </a>
+                <a href="{% url 'profile' %}">
+                    <li>About Me</li>
+                </a>
+                <a href="#">
+                    <li>Projects</li>
+                </a>
+            </ul>
         </nav>
+        <section id="copybox">
+            <article id="copyline">
+                Copyright &copy; 2014-2017 Nicholas Hunt-Walker, Rational Whimsy
+            </article>
+            <nav id="footer-social">
+                <ul>
+                    <a href="http://www.twitter.com/nhuntwalker" target="_blank">
+                        <li>
+                            <i class="fa fa-twitter" aria-hidden="true"></i>
+                        </li>
+                    </a>
+                    <a href="http://www.linkedin.com/in/nhuntwalker" target="_blank">
+                        <li>
+                            <i class="fa fa-linkedin" aria-hidden="true"></i>
+                        </li>
+                    </a>
+                    <a href="http://www.instagram.com/nhuntwalker" target="_blank">
+                        <li>
+                            <i class="fa fa-instagram" aria-hidden="true"></i>
+                        </li>
+                    </a>
+                    <a href="http://www.github.com/nhuntwalker" target="_blank">
+                        <li>
+                            <i class="fa fa-github" aria-hidden="true"></i>
+                        </li>
+                    </a>
+                </ul>
+            </nav>
+        </section>
     </footer>
     </main>
     <script type="text/javascript" src="{% static 'base/js/drop_menu.js' %}"></script>

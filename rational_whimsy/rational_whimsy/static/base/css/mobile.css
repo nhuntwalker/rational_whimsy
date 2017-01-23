@@ -1,7 +1,13 @@
 @media screen and (max-width: 480px){
+    .mobile-only {
+        display: block;
+    }
+    .desktop-only {
+        display: none;
+    }
     #top-logo {
         overflow: hidden;
-        background-color: #2ec3ac;
+        background-color: #02bde5;
         position: fixed;
         top: 0;
         z-index: 20;
@@ -12,7 +18,7 @@
     #top-logo-horizontal {
         z-index: 100;
         position: relative;
-        background-color: #2ec3ac;
+        background-color: #02bde5;
         overflow: hidden;
     }
     #top-logo #logo-container {
@@ -33,7 +39,7 @@
         color: #FFF;
         cursor: pointer;
         z-index: 10;
-        background-color: #2ec3ac;
+        background-color: #02bde5;
     }
     #menu-btn i {
         vertical-align: middle;
@@ -59,7 +65,7 @@
     }
 
     #featured-tag {
-        background-color: #2ec3ac;
+        background-color: #02bde5;
         color: white;
         position: absolute;
         top: 0;
@@ -78,5 +84,44 @@
     }
     #featured-post p {
         font-size: 1.3em;
+    }
+
+    #blog-roll {
+        margin-top: 20px;
+        background-color: #02bde5;
+        width: 100%;
+    }
+    #blog-roll h2 {
+        color: white;
+        text-transform: uppercase;
+        text-align: center;
+        padding-top: 50px;
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+    #blog-roll h3 {
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: 700;
+        padding: 5%;
+    }
+    #blog-roll img {
+        width: 100%;
+    }
+    #blog-roll article {
+        width: 90%;
+        border: 5px solid black;
+        margin: 20px auto;
+        background-color: white;
+        text-align: center;
+        line-height: 1.5em;
+    }
+    #blog-roll p {
+        width: 90%;
+        margin: auto;
+    }
+    #blog-roll .post-date {
+        font-style: italic;
+        margin-bottom: 10px;
     }
 }

@@ -11,7 +11,7 @@
         </section>
         <section id="featured-post">
             <h2>{{ featured_post.title }}</h2>
-            <p>{% lorem 23 w %}</p>
+            <p>{% lorem 23 w %}...</p>
             <a href="{% url 'post_detail_slug' featured_post.slug %}">
                 <button class="more-btn orange-btn feature-btn">
                     Read Post
@@ -24,10 +24,18 @@
     </section>
 {% endif %}
 {% if posts %}
-    <section id="blog-roll">
-        <h2>Posts</h2>
+    <section id="blog-roll" class="desktop-only">
+        <h2>Recent Posts</h2>
         {% for post in posts %}
-            <article>{{ post.created | date:"M j, Y" }}</article>
+            <article>
+                <img src="{{ post.cover_img.url }}" />
+                <h3>{{ post.title }}</h3>
+            <p class="post-date">Published {{ post.published_date | date:"M j, Y" }}</p>
+            <p>{% lorem 30 w %}...</p>
+                <button class="more-btn white-btn list-btn">
+                    Read More
+                </button>
+            </article>
         {% endfor %}
     </section>
 {% else %}
