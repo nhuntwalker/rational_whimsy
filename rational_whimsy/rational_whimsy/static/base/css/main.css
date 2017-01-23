@@ -1,0 +1,83 @@
+* {
+    font-family: "Open Sans", sans-serif;
+    font-weight: lighter;
+    box-sizing: border-box;
+}
+
+.clearfix {
+    clear: both;
+}
+
+#mobile-menu a,
+#main-menu a {
+    text-decoration: none;
+}
+
+#mobile-menu a li,
+#main-menu a li {
+    color: #2ec3ac;
+    text-transform: uppercase;
+}
+
+#featured {
+    position: relative;
+    overflow: hidden;
+}
+#featured a {
+    text-decoration: none;
+}
+
+#featured-background {
+    /*background-image: url("../imgs/zen_garden.jpg");*/
+    /*background-position: center top;
+    background-size: 150% auto;
+    background-repeat: no-repeat;*/
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+}
+#featured-background img {
+    width: 120%;
+    margin-left: -10%;
+}
+#featured-post {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+    background-color: rgba(0,0,0,0.2);
+}
+#featured-post p {
+    font-size: 1.3em;
+    margin: 0 3%;
+    line-height: 1.2em;
+}
+
+.more-btn {
+    cursor: pointer;
+    text-align: center;
+    border-width: 1px;
+    font-size: 1em;
+    padding: 3% 6%;
+    border-style: solid;
+    font-family: helvetica;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+.more-btn.green-btn {
+    background-color: #2ec3ac;
+    color: white;
+    border-color: white;
+}
+.more-btn.orange-btn {
+    background-color: #F0563D;
+    color: white;
+    border-color: white;
+}
+.feature-btn {
+    margin: 8% auto;
+}
