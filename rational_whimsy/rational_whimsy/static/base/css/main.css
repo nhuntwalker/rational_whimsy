@@ -45,8 +45,8 @@
     filter: blur(5px);
 }
 #featured-background img {
-    width: 120%;
-    margin-left: -10%;
+    width: 180%;
+    margin-left: -45%;
 }
 #featured-post {
     position: absolute;
@@ -123,4 +123,18 @@
 
 #content {
     margin-bottom: 10px;
+}
+.form-table th {
+    text-align: left;
+    font-weight: 600;
+}
+.form-table input[type="text"] {
+    padding: 5% 10%;
+    font-size: 1.2em;
+    margin: 2% 0;
+}
+.form-table textarea {
+    font-size: 1.2em;
+    width: 93%;
+    padding: 5%;
 }

@@ -7,7 +7,6 @@
     }
     #top-logo {
         overflow: hidden;
-        background-color: #02bde5;
         position: fixed;
         top: 0;
         z-index: 20;
@@ -18,13 +17,12 @@
     #top-logo-horizontal {
         z-index: 100;
         position: relative;
-        background-color: #02bde5;
         overflow: hidden;
     }
     #top-logo #logo-container {
         position: relative;
         width: 82.5%;
-        padding: 3% 0 2.5%;
+        padding: 3% 0 2%;
         float: left;
         background-color: white;
         z-index: 10;
@@ -35,11 +33,9 @@
         font-size: 2em;
         float: left;
         text-align: left;
-        padding: 3% 2.5% 0% 20px;
         color: #FFF;
         cursor: pointer;
         z-index: 10;
-        background-color: #02bde5;
     }
     #menu-btn i {
         vertical-align: middle;

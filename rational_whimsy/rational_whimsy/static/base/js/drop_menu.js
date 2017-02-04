@@ -8,7 +8,7 @@ $(document).ready(function(){
             }, 500).removeClass("dropped");
         } else {
             $("#mobile-menu").animate({
-                "margin-top": "0%",
+                "margin-top": "-1.5%",
             }, 500).addClass("dropped");
         }
    }); 
