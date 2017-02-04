@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% load static %}
 
 {% block title %}Home{% endblock %}
 
@@ -6,18 +7,37 @@
 {% if featured_post %}
     <section id="featured">
         <section id="featured-background">
+        <img src="{% static "base/imgs/zen_garden.jpg" %}" />
         </section>
         <section id="featured-post">
             <h2>{{ featured_post.title }}</h2>
-            <p>{% lorem 20 w %}</p>
+            <p>{% lorem 23 w %}...</p>
+            <a href="{% url 'post_detail_slug' featured_post.slug %}">
+                <button class="more-btn orange-btn feature-btn">
+                    Read Post
+                </button>
+            </a>
+        </section>
+        <section id="featured-tag">
+            Featured Post
         </section>
     </section>
 {% endif %}
 {% if posts %}
-    <h2>Posts</h2>
-    {% for post in posts %}
-        <article>{{ post.created | date:"M j, Y" }}</article>
-    {% endfor %}
+    <section id="blog-roll" class="desktop-only">
+        <h2>Recent Posts</h2>
+        {% for post in posts %}
+            <article>
+                <img src="{{ post.cover_img.url }}" />
+                <h3>{{ post.title }}</h3>
+            <p class="post-date">Published {{ post.published_date | date:"M j, Y" }}</p>
+            <p>{% lorem 30 w %}...</p>
+                <button class="more-btn white-btn list-btn">
+                    Read More
+                </button>
+            </article>
+        {% endfor %}
+    </section>
 {% else %}
     There are not yet any posts.
 {% endif %}

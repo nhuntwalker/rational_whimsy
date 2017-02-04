@@ -27,6 +27,7 @@ class Post(models.Model):
     """The model for an individual blog post."""
 
     title = models.CharField(name="title", max_length=255)
+    cover_img = models.ImageField(upload_to="post_covers", default="post_covers/stock-cover.jpg")
     body = models.TextField(name="body")
     created = models.DateTimeField(name="created", auto_now_add=True)
     published_date = models.DateTimeField(
