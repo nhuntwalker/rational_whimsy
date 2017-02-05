@@ -210,8 +210,7 @@ class BlogRoutesTestCase(TestCase):
         """The posts in the context of the list view are all published."""
         # import pdb; pdb.set_trace()
         response = self.client.get(reverse_lazy("list_posts"))
-        self.assertEqual(len(self.new_posts),
-                         response.context["object_list"].count())
+        self.assertTrue(response.context["object_list"].count() <= 5)
 
     def test_blog_roll_title_is_blog(self):
         """The title of the blog list should be blog."""
