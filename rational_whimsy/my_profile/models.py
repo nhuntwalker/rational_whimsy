@@ -1,8 +1,9 @@
+"""Model for my profile."""
 from django.db import models
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from blog_images.models import Image
+from redactor.fields import RedactorField
 # Create your models here.
 
 
@@ -15,9 +16,8 @@ class NMHWProfile(models.Model):
         primary_key=True,
         related_name="profile"
     )
-    photo = models.ForeignKey(
-        Image,
-        related_name="+",
+    photo = models.ImageField(
+        upload_to="profile_imgs/image_%m_%d_%Y_%H%M%S",
         null=True,
         blank=True
     )
@@ -26,7 +26,9 @@ class NMHWProfile(models.Model):
     twitter = models.CharField(max_length=42, blank=True, default="")
     facebook = models.CharField(max_length=42, blank=True, default="")
     instagram = models.CharField(max_length=42, blank=True, default="")
-    description = models.TextField(max_length=42, blank=True, default="")
+    email = models.EmailField(max_length=42, blank=True, default="")
+    resume = models.URLField(blank=True, default="")
+    description = RedactorField(verbose_name="description")
 
 
 @receiver(post_save, sender=User)
