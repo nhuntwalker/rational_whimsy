@@ -120,12 +120,4 @@
         font-style: italic;
         margin-bottom: 10px;
     }
-    
-    /* BLOG DETAIL */
-    #post-content h2 {
-        font-size: 2em;
-        text-align: center;
-        font-weight: 600;
-        margin: 20px 0 20px;
-    }
 }

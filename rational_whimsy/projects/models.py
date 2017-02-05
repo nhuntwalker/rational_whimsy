@@ -1,8 +1,7 @@
-"""The Blog Post model."""
+"""The Coding Project model."""
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
-from redactor.fields import RedactorField
 
 # Create your models here.
 
@@ -13,23 +12,27 @@ PUBLICATION_STATUS = (
 )
 
 
-class PostManager(models.Manager):
+class ProjectManager(models.Manager):
     """Retrieve all the published posts in reverse date order."""
 
     def get_queryset(self):
         """Alter the queryset returned."""
         return super(
-            PostManager,
+            ProjectManager,
             self
         ).get_queryset().filter(status="published").order_by("-created")
 
 
-class Post(models.Model):
-    """The model for an individual blog post."""
+class Project(models.Model):
+    """The model for an individual project."""
 
     title = models.CharField(name="title", max_length=255)
-    cover_img = models.ImageField(upload_to="post_covers", default="post_covers/stock-cover.jpg")
-    body = RedactorField(verbose_name="body")
+    cover_img = models.ImageField(
+        upload_to="project_covers",
+        default=""
+    )
+    body = models.TextField(name="body")
+    code = models.TextField(name="code", blank=True, default=True)
     created = models.DateTimeField(name="created", auto_now_add=True)
     published_date = models.DateTimeField(
         name="published_date",
@@ -45,22 +48,22 @@ class Post(models.Model):
 
     featured = models.BooleanField(default=False)
     objects = models.Manager()
-    published = PostManager()
+    published = ProjectManager()
 
     def __str__(self):
         """The string representation of the object."""
         return self.title
 
 
-@receiver(post_save, sender=Post)
-def unfeature_posts(sender, **kwargs):
-    """Reset feature status when saved post is featured.
+@receiver(post_save, sender=Project)
+def unfeature_project(sender, **kwargs):
+    """Reset feature status when saved project is featured.
 
-    When a post is saved (either added or edited), if it's checked as being
-    featured then make every/any other featured post unfeatured.
+    When a project is saved (either added or edited), if it's checked as being
+    featured then make every/any other featured project unfeatured.
     """
     if kwargs["instance"].featured:
-        other_posts = Post.objects.exclude(pk=kwargs["instance"].pk)
-        for post in other_posts:
-            post.featured = False
-            post.save()
+        other_projects = Project.objects.exclude(pk=kwargs["instance"].pk)
+        for project in other_projects:
+            project.featured = False
+            project.save()

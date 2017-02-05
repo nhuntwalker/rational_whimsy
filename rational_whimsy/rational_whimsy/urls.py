@@ -26,7 +26,8 @@ urlpatterns = [
     url(r'^$', home_view, name="home_page"),
     url(r'^about_me/', include("my_profile.urls")),
     url(r'^login$', login, name="login"),
-    url(r'^logout$', logout, name="logout")
+    url(r'^logout$', logout, name="logout"),
+    url(r'^redactor/', include('redactor.urls')),
 ]
 
 if settings.DEBUG:

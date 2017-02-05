@@ -3,10 +3,12 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-<article>
+<article id="post-content">
     <h2>{{ post.title }}</h2>
     <p>Posted on {{ post.published_date | date:"M j, Y"}}</p>
-    <p>{{ post.body | safe}}</p>
+    <div class="post-body">
+    {{ post.body | safe}}
+    </div>
 </article>
 
 {% endblock %}
