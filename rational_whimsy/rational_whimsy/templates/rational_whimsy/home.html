@@ -11,7 +11,9 @@
         </section>
         <section id="featured-post">
             <h2>{{ featured_post.title }}</h2>
-            <p>{{ featured_post.body | striptags | truncatechars:175 }}</p>
+            <p class="mobile-only">{{ featured_post.body | striptags | truncatechars:175 }}</p>
+            <p class="tablet-only">{{ featured_post.body | striptags | truncatechars:470 }}</p>
+            <p class="desktop-only">{{ featured_post.body | striptags | truncatechars:175 }}</p>
             <a href="{% url 'post_detail_slug' featured_post.slug %}">
                 <button class="more-btn orange-btn feature-btn">
                     Read Post

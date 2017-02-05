@@ -2,6 +2,9 @@
     .mobile-only {
         display: block;
     }
+    .tablet-only {
+        display: none;
+    }
     .desktop-only {
         display: none;
     }
@@ -30,7 +33,6 @@
     #top-logo #menu-btn {
         position: relative;
         width: 17.5%;
-        font-size: 2em;
         float: left;
         text-align: left;
         color: #FFF;
@@ -76,7 +78,6 @@
     #featured-post h2 {
         font-size: 1.8em;
         margin: 13% 0 7%;
-        text-transform: uppercase;
     }
     #featured-post p {
         font-size: 1.3em;

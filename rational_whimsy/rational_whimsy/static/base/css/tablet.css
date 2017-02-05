@@ -1,0 +1,94 @@
+@media screen and (min-width: 481px) and (max-width: 800px) {
+
+    .tablet-only {
+        display: block;
+    }
+    .desktop-only {
+        display: none;
+    }
+    #top-logo {
+        position: fixed;
+        top: 0;
+        z-index: 20;
+    }
+    #top-logo img {
+        width: 100%;
+    }
+    #top-logo-horizontal {
+        z-index: 100;
+        position: relative;
+        overflow: hidden;
+    }
+    #top-logo #logo-container {
+        position: relative;
+        width: 91.5%;
+        padding: 0.2% 0;
+        float: left;
+        background-color: white;
+        z-index: 10;
+        text-align: center;
+    }
+    #top-logo #logo-container img {
+        width: 60%;
+    }
+    #top-logo #menu-btn {
+        position: relative;
+        width: 8.5%;
+        float: left;
+        text-align: left;
+        color: #FFF;
+        cursor: pointer;
+        z-index: 10;
+    }
+    #menu-btn i {
+        vertical-align: middle;
+    }
+    #mobile-menu li {
+        font-size: 1.3em;
+        padding: 15px 20px;
+        border-bottom: 1px solid #DDD;
+    }
+    #mobile-menu {
+        float: left;
+        position: relative;
+        background-color: white;
+        width: 30%;
+        margin-top: -100%;
+        top: 7px;
+    }
+    header {
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+
+    #content {
+        margin-top: 9%;
+    }
+
+    #featured-tag {
+        background-color: #02bde5;
+        color: white;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 1.3% 3%;
+        border-bottom: 1px solid white;
+        border-left: 1px solid white;
+    }
+    #featured-post, #featured-background {
+        height: 450px;
+    }
+    #featured-post h2 {
+        font-size: 2.2em;
+        margin: 8% 0 3%;
+    }
+    #featured-post p {
+        font-size: 1.3em;
+        line-height: 1.3em;
+    }
+    .feature-btn {
+        margin: 5% auto;
+    }
+    .more-btn {
+        padding: 1.5% 4% 1.4%;
+    }
+}
