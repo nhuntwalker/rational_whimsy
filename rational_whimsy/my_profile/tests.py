@@ -9,7 +9,7 @@ from django.forms import ModelForm
 from django.urls import reverse_lazy
 from bs4 import BeautifulSoup
 from django.contrib.sessions.middleware import SessionMiddleware
-
+from django.core.files.uploadedfile import SimpleUploadedFile
 
 fake = Faker()
 
@@ -66,6 +66,15 @@ class ProfileViewTests(TestCase):
         self.user.set_password("potatoes")
         self.user.save()
         self.profile = self.user.profile
+        self.profile.photo = SimpleUploadedFile(
+            name='image_1.jpg',
+            content=open(
+                'rational_whimsy/static/base/imgs/computer-1.jpg',
+                'rb'
+            ).read(),
+            content_type='image/jpeg'
+        )
+        self.profile.save()
         self.client = Client()
         self.request = RequestFactory()
         self.get_req = RequestFactory().get("/foo_path")
@@ -156,7 +165,6 @@ class ProfileViewTests(TestCase):
             self.assertTrue(html.find("input", {"name": field}) is not None)
         self.assertTrue(html.find("textarea",
                                   {"name": "description"}) is not None)
-        self.assertTrue(html.find("select", {"name": "photo"}) is not None)
 
     def test_profile_edit_response_has_form_in_context(self):
         """A get request returns a form object in the context."""
