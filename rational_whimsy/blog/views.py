@@ -13,6 +13,8 @@ class ListPosts(ListView):
 
     model = Post
     template_name = "blog/blog_list.html"
+    queryset = Post.published.all()
+    paginate_by = 5
 
     def get_context_data(self, **kwargs):
         """Need to add a bit more context."""

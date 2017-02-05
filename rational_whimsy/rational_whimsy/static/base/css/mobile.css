@@ -126,7 +126,7 @@
     #post-detail, .page-header {
         margin-top: 90px;
     }
-    #post-detail h2 {
+    #post-detail h1 {
         font-size: 2em;
         text-align: center;
         font-weight: 600;
@@ -195,9 +195,9 @@
         text-align: center;
         margin-bottom: 20px;
     }
-    .page-header h2 {
+    .page-header h1 {
         background-color: #02bde5;
-        padding: 12px 30px;
+        padding: 12px 50px;
         color: white;
         font-size: 2em;
         display: inline-block;      
@@ -234,5 +234,81 @@
     }
     .profile-description p:last-child {
         margin-bottom: 0;
+    }
+
+    /* BLOG ROLL */
+    .post-list {
+        width: 90%;
+        margin: 0 auto
+    }
+    .post-list article {
+        margin-bottom: 20px;
+    }
+    .post-list .cover-img {
+        position: relative;
+    }
+    .post-list .cover-img img {
+        width: 100%;
+    }
+    .post-list .post-date {
+        position: absolute;
+        background-color: #02bde5;
+        color: white;
+        top: 15px;
+        padding: 10px 15px;
+    }
+    .post-list .post-content {
+        background-color: #F2F2F2;
+        padding: 15px;
+    }
+    .post-list h2 {
+        text-align: center;
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+    .post-list p {
+        line-height: 1.4em;
+    }
+    .post-list button,
+    .pagination button  {
+        border: none;
+        color: white;
+        width: 100%;
+        cursor: pointer;
+        text-transform: uppercase;
+        overflow: hidden;
+        padding: 0;
+    }
+    .post-list .btn-txt,
+    .post-list .arrow {
+        padding: 7.5px 0;
+        float: left;
+        text-align: center;
+        font-size: 1.4em;
+    }
+    .post-list .btn-txt {
+        background-color: #02bde5;
+        width: 90%;
+    }
+    .post-list .arrow {
+        width: 10%;
+        background-color: #0099B9;
+    }
+    .pagination {
+        overflow: hidden;
+        width: 90%;
+        margin: 0 auto;
+    }
+    .pagination button {
+        width: auto;
+        font-size: 1em;
+        padding: 7.5px 15px;
+        background-color: #F0563D;
+    }
+    .pagination .prev-page {
+        float: left;
+    }
+    .pagination .next-page {
+        float: right;
     }
 }

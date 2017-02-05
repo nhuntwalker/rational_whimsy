@@ -17,7 +17,7 @@ class NMHWProfile(models.Model):
         related_name="profile"
     )
     photo = models.ImageField(
-        upload_to="profile_imgs/image_%m_%d_%Y_%H%M%S",
+        upload_to="profile_imgs",
         null=True,
         blank=True
     )
