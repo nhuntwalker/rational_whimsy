@@ -3,9 +3,14 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-<article id="post-content">
+<article id="post-detail">
     <h2>{{ post.title }}</h2>
-    <p>Posted on {{ post.published_date | date:"M j, Y"}}</p>
+    <p class="post-date">Posted on {{ post.published_date | date:"M j, Y"}}</p>
+    <div class="horizontal-gray">
+    </div>
+    <div class="post-cover">
+        <img src="{{ post.cover_img.url }}"/>
+    </div>
     <div class="post-body">
     {{ post.body | safe}}
     </div>

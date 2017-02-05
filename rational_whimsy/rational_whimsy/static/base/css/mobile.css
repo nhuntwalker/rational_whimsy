@@ -122,10 +122,68 @@
     }
     
     /* BLOG DETAIL */
-    #post-content h2 {
+    #post-detail {
+        margin-top: 90px;
+    }
+    #post-detail h2 {
         font-size: 2em;
         text-align: center;
         font-weight: 600;
-        margin: 20px 0 20px;
+        margin-bottom: 20px;
+    }
+    #post-detail .post-date {
+        text-align: center;
+        font-size: 0.85em;
+        margin-bottom: 8px;
+        font-style: oblique;
+    }
+    #post-detail .post-cover {
+        margin: 0 auto 10px;
+        width: 90%;
+    }
+    #post-detail .post-cover img {
+        width: 100%;
+    }
+    #post-detail .post-body {
+        width: 90%;
+        margin: 0 auto 20px;
+        line-height: 1.4em;
+    }
+    #post-detail .post-body p, ul, ol {
+        margin-bottom: 15px;
+    }
+    #post-detail .post-body strong {
+        font-weight: 600;
+    }
+    #post-detail .post-body em {
+        font-style: oblique;
+    }
+    #post-detail .post-body ul {
+        list-style-type: disc;
+    }
+    #post-detail .post-body ol {
+        list-style-type: decimal;
+    }
+    #post-detail .post-body ul, ol {
+        margin-left: 10%;
+    }
+    #post-detail .post-body li {
+        list-style-position: outside;
+        margin-bottom: 5px;
+    }
+    #post-detail .post-body pre {
+        background-color: #fafafa;
+        font-family: monospace;
+        padding: 10px;
+        overflow-x: scroll;
+        margin: 1em 0px 1em;
+        border-radius: 3px;
+        border: 1px solid #DDD;
+    }
+    #post-detail .post-body blockquote {
+        font-style: oblique;
+        width: 80%;
+        margin: 15px auto;
+        color: #777;
     }
 }
