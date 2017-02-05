@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', '')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'potatoes')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG', 'True'))
@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'rational_whimsy.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.environ.get("DB_NAME", ''),
+        "NAME": os.environ.get("DB_NAME", 'rationalwhimsy'),
         "USER": os.environ.get("DB_USER", ''),
         "PASSWORD": os.environ.get("DB_PASS", ''),
         "HOST": os.environ.get("DB_HOST", "localhost"),
