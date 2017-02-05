@@ -138,3 +138,9 @@
     width: 93%;
     padding: 5%;
 }
+.horizontal-gray {
+    width: 85%;
+    height: 2px;
+    margin: 0 auto 10px;
+    background-color: #CCC;
+}

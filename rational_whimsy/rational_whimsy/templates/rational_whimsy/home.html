@@ -11,7 +11,7 @@
         </section>
         <section id="featured-post">
             <h2>{{ featured_post.title }}</h2>
-            <p>{% lorem 23 w %}...</p>
+            <p>{{ featured_post.body | striptags | truncatechars:175 }}</p>
             <a href="{% url 'post_detail_slug' featured_post.slug %}">
                 <button class="more-btn orange-btn feature-btn">
                     Read Post
