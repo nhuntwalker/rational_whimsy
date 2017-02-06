@@ -3,24 +3,28 @@
 {% block title %}About Me{% endblock %}
 
 {% block content %}
-<div class="page-header">
-<h1>About Me</h1>
-</div>
-<div class="profile-pic">
-    <img src="{{ profile.photo.url }}" />
-</div>
-<ul class="networking-links">
-    <a href="https://www.github.com/{{ profile.github }}" class="profile-link">
-        <li><i class="fa list-space fa-github" aria-hidden="true"></i> GitHub</li>
-    </a>
-    <a href="mailto:{{ profile.email }}" class="profile-link"><li><i class="fa list-space fa-envelope" aria-hidden="true"></i> Email</li></a>
-    <a href="https://www.linkedin.com/in/{{ profile.linkedin }}" class="profile-link"><li><i class="fa list-space fa-linkedin" aria-hidden="true"></i> LinkedIn</li></a>
-    <a href="https://www.twitter.com/{{ profile.twitter }}" class="profile-link"><li><i class="fa list-space fa-twitter" aria-hidden="true"></i>Twitter</li></a>
-    <a href="https://www.instagram.com/{{ profile.instagram }}" class="profile-link"><li><i class="fa list-space fa-instagram" aria-hidden="true"></i> Instagram</li></a>
-    <a href="{{ profile.resume }}" class="profile-link"><li><i class="fa list-space fa-file-text" aria-hidden="true"></i> Resume</li></a>
-</ul>
-<section class="profile-description">
-{{ profile.description | safe }}
+<section id="content-wrapper">
+    <div class="page-header">
+    <h1>About Me</h1>
+    </div>
+    <div class="profile-top">
+        <div class="profile-pic">
+            <img src="{{ profile.photo.url }}" />
+        </div>
+        <ul class="networking-links">
+            <a href="https://www.github.com/{{ profile.github }}" class="profile-link">
+                <li><i class="fa list-space fa-github" aria-hidden="true"></i> GitHub</li>
+            </a>
+            <a href="mailto:{{ profile.email }}" class="profile-link"><li><i class="fa list-space fa-envelope" aria-hidden="true"></i> Email</li></a>
+            <a href="https://www.linkedin.com/in/{{ profile.linkedin }}" class="profile-link"><li><i class="fa list-space fa-linkedin" aria-hidden="true"></i> LinkedIn</li></a>
+            <a href="https://www.twitter.com/{{ profile.twitter }}" class="profile-link"><li><i class="fa list-space fa-twitter" aria-hidden="true"></i>Twitter</li></a>
+            <a href="https://www.instagram.com/{{ profile.instagram }}" class="profile-link"><li><i class="fa list-space fa-instagram" aria-hidden="true"></i> Instagram</li></a>
+            <a href="{{ profile.resume }}" class="profile-link"><li><i class="fa list-space fa-file-text" aria-hidden="true"></i> Resume</li></a>
+        </ul>
+    </div>
+    <section class="profile-description">
+    {{ profile.description | safe }}
+    </section>
+    <div class="clearfix"></div>
 </section>
-
 {% endblock %}

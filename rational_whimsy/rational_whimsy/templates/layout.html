@@ -3,7 +3,7 @@
 <html>
 <head>
     <link rel="icon" type="img/png" href="{% static "imgs/rw_favicon.png" %}">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,100i,300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
     <title>Rational Whimsy | {% block title %}{% endblock %} </title>
     <link rel="stylesheet" type="text/css" href="{% static "base/css/reset.css" %}">
     <link rel="stylesheet" type="text/css" href="{% static "base/css/main.css" %}">
@@ -14,7 +14,7 @@
 </head>
 <body>
     <main>
-    <header>
+    <header id="mobile-header">
         <section id="top-logo">
             <section id="top-logo-horizontal">
                 <section id="menu-btn">
@@ -51,6 +51,37 @@
             </nav>
         </section>
     </header>
+    <div id="header-container">
+        <header id="full-header">
+            <section id="desktop-logo">
+                <img src="{% static "base/imgs/logoblack_transparent.png" %}"/>
+            </section>
+            <nav id="full-menu">
+                <ul>
+                    <a href="{% url 'home_page' %}">
+                    <li {% if page == "home" %}class="active"{% endif %}>
+                        Home
+                    </li>
+                    </a>
+                    <a href="{% url 'profile' %}">
+                    <li {% if page == "about" %}class="active"{% endif %}>
+                        About Me
+                    </li>
+                    </a>
+                    <a href="{% url 'list_posts' %}">
+                    <li {% if page == "blog" %}class="active"{% endif %}>
+                        Blog
+                    </li>
+                    </a>
+                    <!--<a href="#">
+                    <li {% if page == "projects" %}class="active"{% endif %}>
+                        Projects
+                    </li>
+                    </a>-->
+                </ul>
+            </nav>
+        </header>
+    </div>
     <section id="content">
     {% block content %}{% endblock %}
     </section>
