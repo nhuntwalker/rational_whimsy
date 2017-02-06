@@ -13,7 +13,7 @@
             <h2>{{ featured_post.title }}</h2>
             <p class="mobile-only">{{ featured_post.body | striptags | truncatechars:175 }}</p>
             <p class="tablet-only">{{ featured_post.body | striptags | truncatechars:470 }}</p>
-            <p class="desktop-only">{{ featured_post.body | striptags | truncatechars:175 }}</p>
+            <p class="desktop-only">{{ featured_post.body | striptags | truncatechars:470 }}</p>
             <a href="{% url 'post_detail_slug' featured_post.slug %}">
                 <button class="more-btn orange-btn feature-btn">
                     Read Post
@@ -27,16 +27,23 @@
 {% endif %}
 {% if posts %}
     <section id="blog-roll" class="desktop-only">
-        <h2>Recent Posts</h2>
+        <h2 class="section-header">Recent Posts</h2>
         {% for post in posts %}
             <article>
-                <img src="{{ post.cover_img.url }}" />
-                <h3>{{ post.title }}</h3>
-            <p class="post-date">Published {{ post.published_date | date:"M j, Y" }}</p>
-            <p>{% lorem 30 w %}...</p>
-                <button class="more-btn white-btn list-btn">
-                    Read More
-                </button>
+                <div class="cover-img">
+                    <img src="{{ post.cover_img.url }}" />
+                    <p class="post-date">{{ post.published_date | date:"M j, Y" }}</p>
+                </div>
+                <div class="post-content">
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.body | striptags | truncatechars:200 }}</p>
+                </div>
+                <a href="{% url 'post_detail_slug' post.slug %}">
+                    <button>
+                        <div class="btn-txt">Continue</div>
+                        <div class="arrow"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+                    </button>
+                </a>
             </article>
         {% endfor %}
     </section>

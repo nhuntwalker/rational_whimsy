@@ -16,6 +16,12 @@
 .desktop-only {
     display: block;
 }
+#mobile-header {
+    display: none;
+}
+#full-header {
+    display: block;
+}
 
 #mobile-menu a,
 #main-menu a {
@@ -148,10 +154,174 @@
     background-color: #CCC;
 }
 
-.page-header h1 {
+.page-header h1,
+.section-header {
     background-color: #02bde5;
     padding: 12px 50px;
     color: white;
     font-size: 2em;
     display: inline-block;      
+}
+
+@media screen and (min-width: 801px) {
+    #header-container {
+        overflow: hidden;
+        box-shadow: 0 2px 5px #000;
+    }
+    #full-header {
+        border-top: 5px solid #02bde5;
+        position: relative;
+        z-index: 0;
+    }
+    #desktop-logo {
+        height: 63px;
+        width: 450px;
+        float: left;
+    }
+    #desktop-logo img {
+        width: 100%;
+    }
+    #full-menu {
+        float: right;
+        position: relative;
+        z-index: 2;
+    }
+    #full-menu a {
+        float: left;
+        text-decoration: none;
+        color: #02bde5;
+        text-transform: uppercase;
+        font-weight: 100;
+    }
+    #full-menu a:hover {
+        color: white;
+        background-color: #02bde5;
+    }
+    #full-menu li {
+        border-left: 1px solid #E9E9E9;
+        padding: 23.5px;
+    }
+
+    #featured-tag {
+        background-color: #02bde5;
+        color: white;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 1.3% 3%;
+        border-bottom: 1px solid white;
+        border-left: 1px solid white;
+    }
+    #featured-post, #featured-background {
+        height: 400px;
+    }
+    #featured-background img {
+        position: relative;
+        top: -40%;
+    }
+    #featured-post h2 {
+        font-size: 2.2em;
+        margin: 7% 0 2%;
+    }
+    #featured-post p {
+        font-size: 1.3em;
+        line-height: 1.3em;
+    }
+    #featured {
+        margin-bottom: 50px;
+    }
+    .feature-btn {
+        margin: 3% auto;
+    }
+    .more-btn {
+        padding: 1.5% 4% 1.4%;
+    }
+
+    #blog-roll {
+        width: 60%;
+        margin: 0 auto 20px;
+    }
+    #blog-roll .section-header {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    #blog-roll article {
+        margin-bottom: 20px;
+        background-color: #f2f2f2;
+    }
+    #blog-roll .cover-img {
+        position: relative;
+        width: 40%;
+        float: left;
+    }
+    #blog-roll .cover-img img {
+        width: 100%;
+    }
+    #blog-roll .post-date {
+        position: absolute;
+        background-color: #02bde5;
+        color: white;
+        top: 15px;
+        padding: 7px 15px;
+        font-size: 0.8em;
+    }
+    #blog-roll .post-content {
+        background-color: #F2F2F2;
+        padding: 15px;
+        width: 60%;
+        float: left;
+    }
+    #blog-roll h3 {
+        font-size: 1.6em;
+        margin-bottom: 20px;
+    }
+    #blog-roll p {
+        line-height: 1.4em;
+    }
+    #blog-roll button {
+        border: none;
+        color: white;
+        width: 100%;
+        cursor: pointer;
+        text-transform: uppercase;
+        overflow: hidden;
+        padding: 0;
+    }
+    #blog-roll .btn-txt,
+    #blog-roll .arrow {
+        padding: 7.5px 0;
+        float: left;
+        text-align: center;
+        font-size: 1.4em;
+    }
+    #blog-roll .btn-txt {
+        background-color: #02bde5;
+        width: 90%;
+    }
+    #blog-roll .arrow {
+        width: 10%;
+        background-color: #0099B9;
+    }
+
+    #footer-nav {
+        background-color: #02bde5;
+        overflow: hidden;
+    }
+    #footer-nav ul {
+        text-align: center;
+    }
+    #footer-nav a {
+        display: inline-block;
+        text-decoration: none;
+        color: white;
+        padding: 10px 0;
+    }
+    #footer-nav li {
+        padding: 0 15px;
+        border-right: thin solid white;
+    }
+    #footer-nav a:last-child li {
+        border-right: none;
+    }
 }

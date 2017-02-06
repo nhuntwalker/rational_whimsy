@@ -56,6 +56,14 @@
         margin-top: -100%;
         top: 7px;
     }
+    #mobile-header {
+        display: block;
+    }
+    #full-header {
+        display: none;
+    }
+
+
     header {
         box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
     }
