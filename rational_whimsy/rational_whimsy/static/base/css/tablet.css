@@ -91,4 +91,55 @@
     .more-btn {
         padding: 1.5% 4% 1.4%;
     }
+
+    /* PROFILE PAGE */
+    .page-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .profile-pic {
+        width: 46.5%;
+        float: left;
+        margin-right: 1%;
+    }
+    .profile-pic img {
+        width: 100%;
+    }
+    .networking-links {
+        width: 51.5%;
+        float: left;
+        margin-left: 1%;
+    }
+    .networking-links a {
+        color: white;
+        text-decoration: none;
+    }
+    .networking-links li {
+        background-color: #02bde5;
+        border-bottom: 1px solid white;
+        padding: 13px 0;     
+    }
+    .networking-links .list-space {
+        margin: 0 20px;
+    }
+    .profile-description {
+        background-color: #F2F2F2;
+        padding: 20px;
+    }
+    .profile-description p {
+        margin-bottom: 20px;
+        line-height: 1.4em;
+    }
+    .profile-description p:last-child {
+        margin-bottom: 0;
+    }
+
+    #content-wrapper {
+        margin: 20px;
+    }
+    .profile-top {
+        overflow: hidden;
+        margin-bottom: 15px;
+    }
 }

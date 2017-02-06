@@ -147,3 +147,11 @@
     margin: 0 auto 10px;
     background-color: #CCC;
 }
+
+.page-header h1 {
+    background-color: #02bde5;
+    padding: 12px 50px;
+    color: white;
+    font-size: 2em;
+    display: inline-block;      
+}
