@@ -3,6 +3,7 @@ from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from redactor.fields import RedactorField
+from taggit.managers import TaggableManager
 
 # Create your models here.
 
@@ -46,6 +47,7 @@ class Post(models.Model):
     featured = models.BooleanField(default=False)
     objects = models.Manager()
     published = PostManager()
+    tags = TaggableManager()
 
     def __str__(self):
         """The string representation of the object."""
