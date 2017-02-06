@@ -216,7 +216,6 @@
     }
     .pagination {
         overflow: hidden;
-        width: 90%;
         margin: 0 auto;
     }
     .pagination button {

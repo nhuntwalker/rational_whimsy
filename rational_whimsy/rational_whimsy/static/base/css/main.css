@@ -154,19 +154,25 @@
     background-color: #CCC;
 }
 
-.page-header h1,
 .section-header {
     background-color: #02bde5;
     padding: 12px 50px;
     color: white;
     font-size: 2em;
     display: inline-block;      
-}
+} 
+.page-header h1 {
+    background-color: #02bde5;
+    padding: 12px 50px;
+    color: white;
+    font-size: 1.7em;
+    display: inline-block;      
+} 
 
 @media screen and (min-width: 801px) {
     #header-container {
         overflow: hidden;
-        box-shadow: 0 2px 5px #000;
+        box-shadow: 0 0px 5px #CCC;
     }
     #full-header {
         border-top: 5px solid #02bde5;
@@ -324,4 +330,148 @@
     #footer-nav a:last-child li {
         border-right: none;
     }
+
+    /* PROFILE PAGE */
+    .page-header {
+        margin-bottom: 20px;
+    }
+
+    .profile-top {
+        width: 30%;
+        float: left;
+        margin-right: 0.5%;
+    }
+    .profile-pic {
+        margin-bottom: 15px;
+    }
+    .profile-pic img {
+        width: 100%;
+    }
+    .networking-links {
+
+    }
+    .networking-links a {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .networking-links a:hover {
+        color: white;
+    }
+    .networking-links li {
+        background-color: #F2F2F2;
+        border-bottom: 1px solid white;
+        padding: 13px 0;     
+    }
+    .networking-links li:hover {
+        background-color: #02bde5;
+        border-bottom: 1px solid white;
+        padding: 13px 0;     
+    }
+    .networking-links .list-space {
+        margin: 0 20px;
+    }
+    .profile-description {
+        width: 69%;
+        float: left;
+        background-color: #F2F2F2;
+        padding: 20px;
+        margin-left: 0.5%;
+    }
+    .profile-description p {
+        margin-bottom: 20px;
+        line-height: 1.4em;
+    }
+    .profile-description p:last-child {
+        margin-bottom: 0;
+    }
+
+    #content-wrapper {
+        margin: 20px;
+    }
+    .profile-top {
+        overflow: hidden;
+        margin-bottom: 15px;
+    }
+
+    /* BLOG ROLL */
+    .post-list {
+        width: 60%;
+    }
+    .post-list article {
+        margin-bottom: 20px;
+        background-color: #f2f2f2;
+    }
+    .post-list .cover-img {
+        position: relative;
+        width: 40%;
+        float: left;
+    }
+    .post-list .cover-img img {
+        width: 100%;
+    }
+    .post-list .post-date {
+        position: absolute;
+        background-color: #02bde5;
+        color: white;
+        top: 15px;
+        padding: 7px 15px;
+        font-size: 0.8em;
+    }
+    .post-list .post-content {
+        background-color: #F2F2F2;
+        padding: 15px;
+        width: 60%;
+        float: left;
+    }
+    .post-list h2 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+    .post-list p {
+        line-height: 1.4em;
+    }
+    .post-list button,
+    .pagination button  {
+        border: none;
+        color: white;
+        width: 100%;
+        cursor: pointer;
+        text-transform: uppercase;
+        overflow: hidden;
+        padding: 0;
+    }
+    .post-list .btn-txt,
+    .post-list .arrow {
+        padding: 7.5px 0;
+        float: left;
+        text-align: center;
+        font-size: 1.4em;
+    }
+    .post-list .btn-txt {
+        background-color: #02bde5;
+        width: 90%;
+    }
+    .post-list .arrow {
+        width: 10%;
+        background-color: #0099B9;
+    }
+    .pagination {
+        overflow: hidden;
+        margin: 0 auto;
+    }
+    .pagination button {
+        width: auto;
+        font-size: 1em;
+        padding: 7.5px 15px;
+        background-color: #F0563D;
+    }
+    .pagination .prev-page {
+        float: left;
+    }
+    .pagination .next-page {
+        float: right;
+    }
+
+
 }

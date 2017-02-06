@@ -60,7 +60,7 @@
     #full-header {
         display: none;
     }
-    
+
     header {
         box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
     }
@@ -299,7 +299,6 @@
     }
     .pagination {
         overflow: hidden;
-        width: 90%;
         margin: 0 auto;
     }
     .pagination button {
