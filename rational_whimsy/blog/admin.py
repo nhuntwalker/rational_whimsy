@@ -24,7 +24,7 @@ class PostAdmin(admin.ModelAdmin):
     fields = ("cover_img", "title", "slug", "published_date", "body", "status", "featured")
     list_display = ("title", "slug", "created", "published_date", "status")
     prepopulated_fields = {"slug": ("title",)}
-    ordering = ["published_date", "created", "status"]
+    ordering = ["-published_date", "-created", "status"]
     actions = [make_published, make_private]
 
 admin.site.register(Post, PostAdmin)
