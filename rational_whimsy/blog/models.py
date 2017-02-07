@@ -22,7 +22,7 @@ class PostManager(models.Manager):
         return super(
             PostManager,
             self
-        ).get_queryset().filter(status="published").order_by("-created")
+        ).get_queryset().filter(status="published").order_by("-published_date")
 
 
 class Post(models.Model):
