@@ -1,4 +1,4 @@
-@media screen and (max-device-width: 480px){
+@media only screen and (max-width: 480px) {
     .mobile-only {
         display: block;
     }
@@ -83,11 +83,11 @@
         height: 340px;
     }
     #featured-post h2 {
-        font-size: 1.8vw;
+        font-size: 8vw;
         margin: 13% 0 7%;
     }
     #featured-post p {
-        font-size: 1.3vw;
+        font-size: 5vw;
     }
 
     #blog-roll {
