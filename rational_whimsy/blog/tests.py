@@ -70,10 +70,11 @@ class BlogTestCase(TestCase):
         self.assertEqual(len(published), 10)
 
     def test_published_returns_latest_first(self):
-        """The first post returned by Post.published is latest."""
+        """The first post returned by Post.published is latest published."""
         self.save_posts()
         published = Post.published.all()
-        self.assertEqual(self.new_posts[-1], published.first())
+        sorted_posts = sorted(self.new_posts, key=lambda x: x.published_date)
+        self.assertEqual(sorted_posts[0], published.first())
 
     def test_only_one_featured_post_at_a_time(self):
         """There may only be one featured post at a time."""
