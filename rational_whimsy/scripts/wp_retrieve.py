@@ -33,17 +33,21 @@ def make_new_post(the_dict):
 
 def run():
     """Run function for manage.py to see."""
-    response = requests.get(
-        "http://rationalwhimsy.com/wp-json/wp/v2/posts?per_page=100")
-    posts = response.json()
+    if Post.objects.count() > 0:
+        print("Already have wordpress posts")
 
-    response = requests.get(
-        "http://rationalwhimsy.com/wp-json/wp/v2/tags?per_page=100")
-    tags = response.json()
+    else:
+        response = requests.get(
+            "http://rationalwhimsy.com/wp-json/wp/v2/posts?per_page=100")
+        posts = response.json()
 
-    for post in posts:
-        for idx, tag in enumerate(post["tags"]):
-            find_tag = filter(lambda x: x["id"] == post["tags"][idx], tags)
-            the_tag = list(find_tag)[0]["name"]
-            post["tags"][idx] = the_tag
-        make_new_post(post)
+        response = requests.get(
+            "http://rationalwhimsy.com/wp-json/wp/v2/tags?per_page=100")
+        tags = response.json()
+
+        for post in posts:
+            for idx, tag in enumerate(post["tags"]):
+                find_tag = filter(lambda x: x["id"] == post["tags"][idx], tags)
+                the_tag = list(find_tag)[0]["name"]
+                post["tags"][idx] = the_tag
+            make_new_post(post)
