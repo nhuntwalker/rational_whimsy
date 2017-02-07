@@ -547,3 +547,382 @@
         width: 100%;
     }
 }
+
+@media only screen and (min-device-width: 801px) {
+    #header-container {
+        overflow: hidden;
+        box-shadow: 0 0px 5px #CCC;
+    }
+    #full-header {
+        border-top: 5px solid #02bde5;
+        position: relative;
+        z-index: 0;
+    }
+    #desktop-logo {
+        height: 63px;
+        width: 450px;
+        float: left;
+    }
+    #desktop-logo img {
+        width: 100%;
+    }
+    #full-menu {
+        float: right;
+        position: relative;
+        z-index: 2;
+    }
+    #full-menu a {
+        float: left;
+        text-decoration: none;
+        color: #02bde5;
+        text-transform: uppercase;
+        font-weight: 100;
+    }
+    #full-menu a:hover {
+        color: white;
+        background-color: #02bde5;
+    }
+    #full-menu li {
+        border-left: 1px solid #E9E9E9;
+        padding: 23.5px;
+    }
+
+    #featured-tag {
+        background-color: #02bde5;
+        color: white;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 1.3% 3%;
+        border-bottom: 1px solid white;
+        border-left: 1px solid white;
+    }
+    #featured-post, #featured-background {
+        height: 400px;
+    }
+    #featured-background img {
+        position: relative;
+        top: -40%;
+    }
+    #featured-post h2 {
+        font-size: 2.2em;
+        margin: 7% 0 2%;
+    }
+    #featured-post p {
+        font-size: 1.3em;
+        line-height: 1.3em;
+    }
+    #featured {
+        margin-bottom: 50px;
+    }
+    .feature-btn {
+        margin: 3% auto;
+    }
+    .more-btn {
+        padding: 1.5% 4% 1.4%;
+    }
+
+    #blog-roll {
+        width: 60%;
+        margin: 0 auto 20px;
+    }
+    #blog-roll .section-header {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    #blog-roll article {
+        margin-bottom: 20px;
+        background-color: #f2f2f2;
+    }
+    #blog-roll .cover-img {
+        position: relative;
+        width: 40%;
+        float: left;
+    }
+    #blog-roll .cover-img img {
+        width: 100%;
+    }
+    #blog-roll .post-date {
+        position: absolute;
+        background-color: #02bde5;
+        color: white;
+        top: 15px;
+        padding: 7px 15px;
+        font-size: 0.8em;
+    }
+    #blog-roll .post-content {
+        background-color: #F2F2F2;
+        padding: 15px;
+        width: 60%;
+        float: left;
+    }
+    #blog-roll h3 {
+        font-size: 1.6em;
+        margin-bottom: 20px;
+    }
+    #blog-roll p {
+        line-height: 1.4em;
+    }
+    #blog-roll button {
+        border: none;
+        color: white;
+        width: 100%;
+        cursor: pointer;
+        text-transform: uppercase;
+        overflow: hidden;
+        padding: 0;
+    }
+    #blog-roll .btn-txt,
+    #blog-roll .arrow {
+        padding: 7.5px 0;
+        float: left;
+        text-align: center;
+        font-size: 1.4em;
+    }
+    #blog-roll .btn-txt {
+        background-color: #02bde5;
+        width: 90%;
+    }
+    #blog-roll .arrow {
+        width: 10%;
+        background-color: #0099B9;
+    }
+
+    #footer-nav {
+        background-color: #02bde5;
+        overflow: hidden;
+    }
+    #footer-nav ul {
+        text-align: center;
+    }
+    #footer-nav a {
+        display: inline-block;
+        text-decoration: none;
+        color: white;
+        padding: 10px 0;
+    }
+    #footer-nav li {
+        padding: 0 15px;
+        border-right: thin solid white;
+    }
+    #footer-nav a:last-child li {
+        border-right: none;
+    }
+
+    /* PROFILE PAGE */
+    .page-header {
+        margin-bottom: 20px;
+    }
+
+    .profile-top {
+        width: 30%;
+        float: left;
+        margin-right: 0.5%;
+    }
+    .profile-pic {
+        margin-bottom: 15px;
+    }
+    .profile-pic img {
+        width: 100%;
+    }
+    .networking-links {
+
+    }
+    .networking-links a {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    .networking-links a:hover {
+        color: white;
+    }
+    .networking-links li {
+        background-color: #F2F2F2;
+        border-bottom: 1px solid white;
+        padding: 13px 0;     
+    }
+    .networking-links li:hover {
+        background-color: #02bde5;
+        border-bottom: 1px solid white;
+        padding: 13px 0;     
+    }
+    .networking-links .list-space {
+        margin: 0 20px;
+    }
+    .profile-description {
+        width: 69%;
+        float: left;
+        background-color: #F2F2F2;
+        padding: 20px;
+        margin-left: 0.5%;
+    }
+    .profile-description p {
+        margin-bottom: 20px;
+        line-height: 1.4em;
+    }
+    .profile-description p:last-child {
+        margin-bottom: 0;
+    }
+
+    #content-wrapper {
+        margin: 20px;
+    }
+    .profile-top {
+        overflow: hidden;
+        margin-bottom: 15px;
+    }
+
+    /* BLOG ROLL */
+    .post-list {
+        width: 60%;
+    }
+    .post-list article {
+        margin-bottom: 20px;
+        background-color: #f2f2f2;
+    }
+    .post-list .cover-img {
+        position: relative;
+        width: 40%;
+        float: left;
+    }
+    .post-list .cover-img img {
+        width: 100%;
+    }
+    .post-list .post-date {
+        position: absolute;
+        background-color: #02bde5;
+        color: white;
+        top: 15px;
+        padding: 7px 15px;
+        font-size: 0.8em;
+    }
+    .post-list .post-content {
+        background-color: #F2F2F2;
+        padding: 15px;
+        width: 60%;
+        float: left;
+    }
+    .post-list h2 {
+        font-size: 1.8em;
+        margin-bottom: 20px;
+    }
+    .post-list p {
+        line-height: 1.4em;
+    }
+    .post-list button,
+    .pagination button  {
+        border: none;
+        color: white;
+        width: 100%;
+        cursor: pointer;
+        text-transform: uppercase;
+        overflow: hidden;
+        padding: 0;
+    }
+    .post-list .btn-txt,
+    .post-list .arrow {
+        padding: 7.5px 0;
+        float: left;
+        text-align: center;
+        font-size: 1.4em;
+    }
+    .post-list .btn-txt {
+        background-color: #02bde5;
+        width: 90%;
+    }
+    .post-list .arrow {
+        width: 10%;
+        background-color: #0099B9;
+    }
+    .pagination {
+        overflow: hidden;
+        margin: 0 auto;
+    }
+    .pagination button {
+        width: auto;
+        font-size: 1em;
+        padding: 7.5px 15px;
+        background-color: #F0563D;
+    }
+    .pagination .prev-page {
+        float: left;
+    }
+    .pagination .next-page {
+        float: right;
+    }
+
+    /* BLOG DETAIL */
+
+    #post-detail {
+        width: 90%;
+        margin: 20px auto;
+    }
+    #post-detail h1 {
+        font-size: 2em;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+    #post-detail .post-date {
+        font-size: 0.85em;
+        margin-bottom: 8px;
+        font-style: oblique;
+    }
+    #post-detail .post-cover {
+        margin: 0 auto 10px;
+        width: 90%;
+        text-align: center;
+    }
+    #post-detail .post-cover img {
+        width: 100%;
+        max-width: 600px;
+    }
+    #post-detail .post-body {
+        margin: 0 auto 20px;
+        line-height: 1.8em;
+        background-color: #f1f1f1;
+        padding: 20px;
+    }
+    #post-detail .post-body p,
+    #post-detail .post-body ul,
+    #post-detail .post-body ol {
+        margin-bottom: 15px;
+    }
+    #post-detail .post-body strong {
+        font-weight: 600;
+    }
+    #post-detail .post-body em {
+        font-style: oblique;
+    }
+    #post-detail .post-body ul {
+        list-style-type: disc;
+    }
+    #post-detail .post-body ol {
+        list-style-type: decimal;
+    }
+    #post-detail .post-body ul, ol {
+        margin-left: 10%;
+    }
+    #post-detail .post-body li {
+        list-style-position: outside;
+        margin-bottom: 5px;
+    }
+    #post-detail .post-body pre {
+        background-color: #fafafa;
+        font-family: monospace;
+        padding: 10px;
+        overflow-x: scroll;
+        margin: 1em 0px 1em;
+        border-radius: 3px;
+        border: 1px solid #DDD;
+    }
+    #post-detail .post-body blockquote {
+        font-style: oblique;
+        width: 80%;
+        margin: 15px auto;
+        color: #777;
+    }
+    .horizontal-gray {
+        width: 100%;
+    }
+}
