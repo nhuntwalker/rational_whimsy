@@ -199,6 +199,9 @@
         margin: 15px auto;
         color: #777;
     }
+    #post-detail .post-body img {
+        float: none!important;
+    }
 
     /* PROFILE PAGE */
     .page-header {
