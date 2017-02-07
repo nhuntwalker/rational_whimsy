@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^$', ListPosts.as_view(), name="list_posts"),
     url(r'^new$', CreatePost.as_view(), name="create_posts"),
     url(
-        r'^(?P<slug>[a-z][a-z0-9\-_]+)$',
+        r'^(?P<slug>[a-z0-9\-_]+)$',
         post_detail,
         name="post_detail_slug"
     ),
