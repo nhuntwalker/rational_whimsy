@@ -10,15 +10,18 @@
     <section class="post-list">
     {% for post in object_list %}
         <article>
+            <div class="cover-img">
             {% if post.cover_img and post.cover_img.url != "/imgs/post_covers/stock-cover.jpg" %}
-                <div class="cover-img">
                 <img src="{{ post.cover_img.url }}" />
-            {% else %}
-                <div class="cover-img blank-img"
             {% endif %}
                 <p class="post-date">{{ post.published_date | date:"M j, Y" }}</p>
             </div>
+            
+            {% if post.cover_img and post.cover_img.url != "/imgs/post_covers/stock-cover.jpg" %}
             <section class="post-content">
+            {% else %}
+            <section class="post-content blank-img">
+            {% endif %}
                 <h2>{{ post.title }}</h2>
                 <p>{{ post.body | truncatewords:30 | striptags }}</p>
             </section>
