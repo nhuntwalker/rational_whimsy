@@ -8,9 +8,11 @@
     <p class="post-date">Posted on {{ post.published_date | date:"M j, Y"}}</p>
     <div class="horizontal-gray">
     </div>
+    {% if post.cover_img and post.cover_img.url != "/imgs/post_covers/stock-cover.jpg" %}
     <div class="post-cover">
         <img src="{{ post.cover_img.url }}"/>
     </div>
+    {% endif %}
     <div class="post-body">
     {{ post.body | safe}}
     </div>
