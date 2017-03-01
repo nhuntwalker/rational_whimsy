@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'redactor',
     'taggit',
     'django_extensions',
-    'scripts'
+    'scripts',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

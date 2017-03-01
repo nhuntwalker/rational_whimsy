@@ -41,3 +41,15 @@
     </section>
 </section>
 {% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+    $(document).ready(function(){
+        var github_section = $("#github-list");
+        function fill_section(){
+            console.log('clicked');
+        };
+        github_section.click(fill_section);
+    });
+</script>
+{% endblock %}
