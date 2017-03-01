@@ -45,11 +45,16 @@
 {% block javascript %}
 <script type="text/javascript">
     $(document).ready(function(){
+        function write_article(info){
+            console.log(info);
+            // TODO: generate html for harvested repositories
+        }
         var github_section = $("#github-list");
-        function fill_section(){
-            console.log('clicked');
-        };
-        github_section.click(fill_section);
+        $.get('{% url "get_github" %}', function(data){
+            for (var i=0; i < data.length; i++) {
+                write_article(data[i]);
+            }
+        });
     });
 </script>
 {% endblock %}
