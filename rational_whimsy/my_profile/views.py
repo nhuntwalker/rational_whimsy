@@ -69,6 +69,7 @@ def get_github_events(request):
             new_data["watchers_count"] = info["watchers_count"]
             new_data["forks"] = info["forks"]
             new_data["open_issues"] = info["open_issues"]
+            new_data["language"] = info["language"]
             repo_list.append(new_data)
         idx += 1
 

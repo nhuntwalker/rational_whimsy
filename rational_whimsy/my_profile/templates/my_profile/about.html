@@ -28,7 +28,7 @@
     <div class="clearfix"></div>
     <section id="github-list">
         <h2>What I'm Working On</h2>
-        <article>
+<!--         <article>
             <div>
                 <p class="repo-name"><a href="https://github.com/nhuntwalker/repository-name">nhuntwalker/repository-name</a></p>
                 <p class="last-modified">Updated NN days ago</p>
@@ -37,7 +37,7 @@
                 <p class="repo-desc">A simple Pyramid app for listing and displaying expenses</p>
                 <p class="repo-language">Language: Python</p>
             </div>
-        </article>
+        </article> -->
     </section>
 </section>
 {% endblock %}
@@ -45,14 +45,54 @@
 {% block javascript %}
 <script type="text/javascript">
     $(document).ready(function(){
-        function write_article(info){
+        function createArticle(info){
             console.log(info);
-            // TODO: generate html for harvested repositories
-        }
-        var github_section = $("#github-list");
+            var article = $("<article></article>"),
+                div1 = $("<div></div>"),
+                div2 = $("<div></div>"),
+                pName = $("<p class='repo-name'></p>"),
+                aName = $("<a href='"+ info.repo_url +"'></a>"),
+                pDate = $("<p class='last-modified'></p>"),
+                pDesc = $("<p class='repo-desc'></p>"),
+                pLang = $("<p class='repo-language'></p>");
+
+            aName.text(info.name);
+            pName.append(aName);
+            pDate.text(timeSince(info.updated_at));
+            pDesc.text(info.description);
+            pLang.text(info.language);
+            div1.append(pName).append(pDate);
+            div2.append(pDesc).append(pLang);
+            article.append(div1).append(div2);
+            return article;
+        };
+        function timeSince(dateString){
+            var now = new Date(),
+                then = new Date(dateString),
+                tdiff = (now.getTime() - then.getTime()) / 1E3,
+                minute = 60,
+                hour = 3600,
+                day = 86400,
+                week = 604800,
+                msg = 'Updated ';
+
+                if (tdiff <= minute) {
+                    msg += tdiff.toPrecision(2) + ' seconds ago';
+                } else if (tdiff <= hour) {
+                    msg += (tdiff / minute).toPrecision(2) + ' minutes ago';
+                } else if (tdiff <= day) {
+                    msg += (tdiff / hour).toPrecision(2) + ' hours ago';
+                } else if (tdiff <= week) {
+                    msg += (tdiff / day).toPrecision(2) + ' days ago';
+                } else {
+                    msg += (tdiff / week).toPrecision(2) + ' weeks ago';
+                }
+            return msg;
+        };
+        var githubSection = $("#github-list");
         $.get('{% url "get_github" %}', function(data){
             for (var i=0; i < data.length; i++) {
-                write_article(data[i]);
+                githubSection.append(createArticle(data[i]));
             }
         });
     });

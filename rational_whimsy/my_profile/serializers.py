@@ -14,3 +14,4 @@ class EventSerializer(serializers.Serializer):
     watchers_count = serializers.IntegerField()
     forks = serializers.IntegerField()
     open_issues = serializers.IntegerField()
+    language = serializers.CharField(max_length=256)
