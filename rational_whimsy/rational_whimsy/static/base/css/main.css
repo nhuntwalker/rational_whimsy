@@ -167,10 +167,46 @@
     color: white;
     font-size: 1.7em;
     display: inline-block;      
-} 
+}
 .blank-img {
     float: right!important;
     width: 75%!important;
+}
+
+#github-list h2 {
+    background-color: #02bde5;
+    padding: 12px 50px;
+    color: white;
+    font-size: 1.5em;
+    display: inline-block;  
+    margin-bottom: 20px;    
+}
+.repo-name a {
+    color: #02bde5;
+    text-decoration: none;
+    font-weight: 400;
+}
+.last-modified {
+    color: #9B9B9B;
+    font-size: 0.9em;
+}
+#github-list div {
+    width: 50%;
+    float: left;
+}
+#github-list article {
+    opacity: 0;
+    overflow: hidden;
+    border-bottom: thin solid #EEE;
+    padding: 10px 0 0;
+}
+#github-list article p {
+    margin-bottom: 7px;
+    line-height: 1.3em;
+}
+#github-content {
+    width: 90%;
+    margin: auto;
 }
 
 @media only screen and (min-width: 801px) {
