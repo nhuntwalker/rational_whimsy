@@ -51,7 +51,9 @@
             pName.append(aName);
             pDate.text(timeSince(info.updated_at));
             pDesc.text(info.description);
-            pLang.text('Language: ' + info.language);
+            if (info.language) {
+                pLang.text('Language: ' + info.language);
+            }
             div1.append(pName).append(pDate);
             div2.append(pDesc).append(pLang);
             article.append(div1).append(div2);

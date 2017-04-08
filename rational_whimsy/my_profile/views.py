@@ -47,12 +47,13 @@ def get_github_events(request):
     resp = requests.get(api_url, headers=HEADERS)
     events = resp.json()
     repo_names = []
+    whitelist = ["nhuntwalker", "rwieruch"]
     repo_list = []
     idx = 0
     while len(repo_names) < 5 and idx < len(events):
         event = events[idx]
-        if event["repo"]["name"] not in repo_names and event['public']:
-            new_data = {}
+        if event["repo"]["name"] not in repo_names and event['public'] and event["repo"]["name"].split("/")[0] in whitelist:
+            new_data = {}   
             name = event["repo"]["name"]
             url = event["repo"]["url"]
             repo_names.append(name)
