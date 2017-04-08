@@ -30,6 +30,10 @@ class NMHWProfile(models.Model):
     resume = models.URLField(blank=True, default="")
     description = RedactorField(verbose_name="description")
 
+    def __str__(self):
+        """String representation of a profile object."""
+        return self.user.username
+
 
 @receiver(post_save, sender=User)
 def auto_create_profile(sender, **kwargs):

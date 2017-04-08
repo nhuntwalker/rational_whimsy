@@ -12,6 +12,7 @@ omit =
     */apps.py
     ../bin
     ../lib
+    */admin.py
 
 [report]
 show_missing = True

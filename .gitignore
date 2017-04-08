@@ -96,6 +96,8 @@ share/
 # Django specifics
 rational_whimsy/MEDIA_ASSETS/post_covers/*
 !rational_whimsy/MEDIA_ASSETS/post_covers/stock-cover.jpg
+!rational_whimsy/MEDIA_ASSETS/profile_imgs/.gitkeep
+rational_whimsy/MEDIA_ASSETS/profile_imgs/*
 
 # Ansible
 ansible

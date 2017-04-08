@@ -5,9 +5,11 @@ coverage==4.2
 decorator==4.0.10
 Django==1.10.3
 django-extensions==1.7.6
+django-filter==1.0.1
 django-registration==2.2
 django-taggit==0.22.0
 django-wysiwyg-redactor==0.4.9.1
+djangorestframework==3.5.4
 factory-boy==2.7.0
 fake-factory==0.7.2
 html5lib==0.999999999
