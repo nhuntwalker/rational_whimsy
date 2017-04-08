@@ -40,24 +40,36 @@ def profile_edit(request):
 
 
 @api_view(['GET'])
-def get_github_events(request):
+def get_github_repos(request):
     """Retrieve repositories from Github and return JSON."""
     api_url = 'https://api.github.com/users/nhuntwalker/events'
     api_url += '?q=""&per_page=100'
-    resp = requests.get(api_url, headers=HEADERS)
-    events = resp.json()
+    events = get_github_info(api_url, HEADERS)
+    repo_list = process_github_events(events)
+    serializer = EventSerializer(repo_list, many=True)
+    return Response(serializer.data)
+
+
+def get_github_info(url, headers=None):
+    """Given a repo URL, get info from GitHub as JSON."""
+    resp = requests.get(url, headers=headers)
+    return resp.json()
+
+
+def process_github_events(data):
+    """Given some JSON from github, process and return repos."""
     repo_names = []
     whitelist = ["nhuntwalker", "rwieruch", "StayWokeOrg", "bytes-seattle"]
     repo_list = []
     idx = 0
-    while len(repo_names) < 5 and idx < len(events):
-        event = events[idx]
+    while len(repo_names) < 5 and idx < len(data):
+        event = data[idx]
         if event["repo"]["name"] not in repo_names and event['public'] and event["repo"]["name"].split("/")[0] in whitelist:
             new_data = {}
             name = event["repo"]["name"]
             url = event["repo"]["url"]
             repo_names.append(name)
-            info = get_repo_info(url)
+            info = get_github_info(url, HEADERS)
             event_date = event["created_at"]
             creation_date = info["created_at"]
 
@@ -73,12 +85,4 @@ def get_github_events(request):
             new_data["language"] = info["language"]
             repo_list.append(new_data)
         idx += 1
-
-    serializer = EventSerializer(repo_list, many=True)
-    return Response(serializer.data)
-
-
-def get_repo_info(url):
-    """Given a repo URL, get that repository's info."""
-    resp = requests.get(url, headers=HEADERS)
-    return resp.json()
+    return repo_list

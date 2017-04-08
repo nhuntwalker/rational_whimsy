@@ -58,6 +58,29 @@ class BlogTestCase(TestCase):
         for attr in all_attrs:
             self.assertTrue(hasattr(post, attr))
 
+    def test_saved_post_draft_gets_created_date(self):
+        """."""
+        post = Post(
+            title="Test post",
+            slug=slugify("test post"),
+            body="Some body text for the sake of example.",
+        )
+        self.assertIsNone(post.created)
+        post.save()
+        self.assertIsInstance(post.created, datetime.datetime)
+
+    def test_saved_post_published_gets_created_date(self):
+        """."""
+        post = Post(
+            title="Test post",
+            slug=slugify("test post"),
+            body="Some body text for the sake of example.",
+            published="published"
+        )
+        self.assertIsNone(post.created)
+        post.save()
+        self.assertIsInstance(post.created, datetime.datetime)
+
     def test_published_only_returns_published_posts(self):
         """The status of every post returned by Post.published is published."""
         for idx, item in enumerate(self.new_posts):

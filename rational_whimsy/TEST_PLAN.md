@@ -11,10 +11,11 @@ A cohesive, comprehensive plan for mapping out tests for my website's codebase.
 ### Models
 
 - `Post` objects use the title as the string representation
-- `Post` objects have the proper attributes (title, body, created, published_date, modified, slug, status, featured)
+- `Post` objects have the proper attributes ("title", "body", "created", "published_date", "modified", "slug", "status", "featured")
 - The "published" model manager should return only `Post` objects with the "published" status
 - The first `Post` object in the list of published `Post` objects should be the most recent
 - Only one `Post` should be featured at a time
+
 
 ### Views
 
@@ -25,6 +26,7 @@ A cohesive, comprehensive plan for mapping out tests for my website's codebase.
 - `EditPost` view edits an existing post given the proper primary key
 - `DeletePost` view actually deletes a given post
 - `CreatePost` view creates a post given the proper information
+
 
 ### Routes
 
@@ -77,3 +79,31 @@ A cohesive, comprehensive plan for mapping out tests for my website's codebase.
 - A successful submission to the `profile_edit` route changes the model object
 - An unauthenticated user gets redirected to the `login` page when they attempt to access the `profile_edit` route
 - An authenticated user, when logged out, becomes unauthenticated
+
+
+## To be written
+
+- When a `Post` is created, no matter its status, its `created` date should be set
+- When a `Post` is saved and its `status` is set to `published`, a default date is set as the `published_date` if none was provided
+- `ListPosts` should only be listing published posts
+- `post_detail` view should use the `blog_detail.html` template
+- When the `post_detail` route is hit with a `slug` that doesn't exist, a 404 page should be shown
+- When the `post_detail` route is hit with a `pk` that doesn't exist, a 404 page should be shown
+- When `EditPost` is given the wrong `pk`, a 404 should be raised
+- When `DeletePost` is given the wrong `pk`, a 404 should be raised
+- The `edit_post` route when given the right data actually edits the given post
+- The `edit_post` route when given the wrong pk shows a 404 page
+- The `delete_post` route when given the wrong pk shows a 404 page
+
+- The `NMHWProfile` object has the proper attributes
+- When given a photo and saved, the `NMHWProfile` saves the attribute
+- The string represent of the `NMHWProfile` object is the username
+- `get_github_repos` returns a serialized list of GitHub repositories that I've worked on
+- `get_github_info` takes in a URL with the appropriate headers and returns JSON corresponding to the data at the URL
+- `process_github_events` takes in some JSON event data from GitHub and returns a list of repositories from whitelisted repositories
+
+- The `home_view` takes a request and returns all published posts
+- The `home_view` takes a request and returns the featured post
+- The `home_page` route uses the `home.html` template
+- The `home_page` route returns the 3 most recently-published posts excluding the featured post
+- The `home_page` route contains the featured post in its response
