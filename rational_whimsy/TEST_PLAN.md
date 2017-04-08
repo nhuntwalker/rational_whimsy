@@ -50,4 +50,30 @@ A cohesive, comprehensive plan for mapping out tests for my website's codebase.
 
 ## Profile
 
-- 
+### Models
+
+- A `Profile` is made whenever a `User` is saved
+- Only one `Profile` gets created when a `User` is saved
+
+### Views
+
+- `profile_detail` view has the right details on the page (linkedin, twitter, github, instagram links)
+- `profile_edit` view has a form on the page
+- `profile_edit` view form has the right input fields
+- `profile_edit` view form redirects with successful submission
+- `profile_edit` view form redirects to profile page with successful submission
+- `profile_edit` view actually changes the model's attributes with a successful submission
+
+### Routes
+
+- `profile` route accesses an actual profile object and attaches it to the `profile` keyword in the response context
+- `profile` route uses the proper template
+- `login` route has a form on the page
+- `login` route's form has the right input fields
+- A successful login redirects
+- A successful login redirects and lands on the home page
+- A successful login authenticates the user
+- `profile_edit` route has a model form in the response's context
+- A successful submission to the `profile_edit` route changes the model object
+- An unauthenticated user gets redirected to the `login` page when they attempt to access the `profile_edit` route
+- An authenticated user, when logged out, becomes unauthenticated
