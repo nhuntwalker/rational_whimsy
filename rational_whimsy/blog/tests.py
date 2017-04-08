@@ -75,7 +75,7 @@ class BlogTestCase(TestCase):
             title="Test post",
             slug=slugify("test post"),
             body="Some body text for the sake of example.",
-            published="published"
+            status="Published"
         )
         self.assertIsNone(post.created)
         post.save()
@@ -131,6 +131,15 @@ class BlogViewsUnitTests(TestCase):
             post.save()
         self.new_posts = new_posts
 
+    def add_mixed_posts(self):
+        """Add some blog posts, some of which are drafts."""
+        mixed_posts = [PostFactory.create() for i in range(6)]
+        for idx, post in enumerate(mixed_posts):
+            if (idx % 2):
+                post.status = 'draft'
+            post.save()
+        self.mixed_posts = mixed_posts
+
     def test_list_posts_lists_the_posts(self):
         """The ListPosts view should actually include a list of blog posts."""
         from blog.views import ListPosts
@@ -149,6 +158,16 @@ class BlogViewsUnitTests(TestCase):
         response = view(request)
         self.assertTrue("page" in response.context_data)
         self.assertTrue(response.context_data["page"] == "blog")
+
+    def test_list_posts_lists_only_published_posts(self):
+        """The ListPosts view should include only published posts."""
+        from blog.views import ListPosts
+        self.add_mixed_posts()
+        request = self.request_factory.get("/fake-path")
+        view = ListPosts.as_view(template_name='blog/blog_list.html')
+        response = view(request)
+        posts = response.context_data["object_list"]
+        self.assertTrue(len(posts) == Post.published.count())
 
     def test_post_detail_finds_primary_key(self):
         """The post_detail view should be able to take a primary key."""
@@ -258,6 +277,13 @@ class BlogRoutesTestCase(TestCase):
             )
             self.assertEqual(response.status_code, 200)
 
+    def test_blog_detail_bad_slug_returns_404(self):
+        """."""
+        response = self.client.get(
+            reverse_lazy("post_detail_slug", kwargs={"slug": "foobar"})
+        )
+        self.assertEqual(response.status_code, 404)
+
     def test_every_blog_detail_pk_returns_200(self):
         """Hitting the detail route for every post using the pk is 200."""
         for post in self.new_posts:
@@ -268,6 +294,13 @@ class BlogRoutesTestCase(TestCase):
                 )
             )
             self.assertEqual(response.status_code, 200)
+
+    def test_blog_detail_bad_pk_returns_404(self):
+        """."""
+        response = self.client.get(
+            reverse_lazy("post_detail_pk", kwargs={"pk": 1024})
+        )
+        self.assertEqual(response.status_code, 404)
 
     def test_create_route_has_form(self):
         """The create route has the appropriate form."""

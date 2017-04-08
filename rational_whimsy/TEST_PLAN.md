@@ -15,12 +15,13 @@ A cohesive, comprehensive plan for mapping out tests for my website's codebase.
 - The "published" model manager should return only `Post` objects with the "published" status
 - The first `Post` object in the list of published `Post` objects should be the most recent
 - Only one `Post` should be featured at a time
-
+- When a `Post` is created, no matter its status, its `created` date should be set
 
 ### Views
 
 - `ListPosts` view should list `Post` objects
 - `ListPosts` page type should have "blog" as the name of the page
+- `ListPosts` should only be listing published posts
 - `post_detail` view should be able to take a primary key to show the detail for an individual post
 - `post_detail` view should also be able to take a slug to show the detail for an individual post
 - `EditPost` view edits an existing post given the proper primary key
@@ -36,6 +37,8 @@ A cohesive, comprehensive plan for mapping out tests for my website's codebase.
 - `list_posts` route uses both the `layout.html` and `blog_list.html` templates
 - For any given post, the `post_detail_slug` route returns a status code of 200
 - For any given post, the `post_detail_pk` route also returns a status code of 200
+- When the `post_detail` route is hit with a `slug` that doesn't exist, a 404 page should be shown
+- When the `post_detail` route is hit with a `pk` that doesn't exist, a 404 page should be shown
 - `create_posts` route has a form on the page
 - `create_posts` route has the correct form fields
 - `create_posts` route creates a new post when given the appropriate information
@@ -83,12 +86,6 @@ A cohesive, comprehensive plan for mapping out tests for my website's codebase.
 
 ## To be written
 
-- When a `Post` is created, no matter its status, its `created` date should be set
-- When a `Post` is saved and its `status` is set to `published`, a default date is set as the `published_date` if none was provided
-- `ListPosts` should only be listing published posts
-- `post_detail` view should use the `blog_detail.html` template
-- When the `post_detail` route is hit with a `slug` that doesn't exist, a 404 page should be shown
-- When the `post_detail` route is hit with a `pk` that doesn't exist, a 404 page should be shown
 - When `EditPost` is given the wrong `pk`, a 404 should be raised
 - When `DeletePost` is given the wrong `pk`, a 404 should be raised
 - The `edit_post` route when given the right data actually edits the given post
