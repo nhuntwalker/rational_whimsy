@@ -72,6 +72,8 @@ A cohesive, comprehensive plan for mapping out tests for my website's codebase.
 - `profile_edit` view form redirects with successful submission
 - `profile_edit` view form redirects to profile page with successful submission
 - `profile_edit` view actually changes the model's attributes with a successful submission
+- `get_github_info` takes in a URL with the appropriate headers and returns JSON corresponding to the data at the URL
+- `process_github_events` takes in some JSON event data from GitHub and returns a list of repositories from whitelisted repositories
 
 ### Routes
 
@@ -95,8 +97,6 @@ A cohesive, comprehensive plan for mapping out tests for my website's codebase.
 - The `delete_post` route when given the wrong pk shows a 404 page
 
 - `get_github_repos` returns a serialized list of GitHub repositories that I've worked on
-- `get_github_info` takes in a URL with the appropriate headers and returns JSON corresponding to the data at the URL
-- `process_github_events` takes in some JSON event data from GitHub and returns a list of repositories from whitelisted repositories
 
 - The `home_view` takes a request and returns all published posts
 - The `home_view` takes a request and returns the featured post
