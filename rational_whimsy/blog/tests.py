@@ -1,4 +1,5 @@
 """Tests of the blog app."""
+from django.http.response import Http404
 from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse_lazy
 from django.utils.text import slugify
@@ -203,6 +204,20 @@ class BlogViewsUnitTests(TestCase):
         post = Post.published.first()
         self.assertTrue(post.title == "Edited This Post")
 
+    def test_edit_post_bad_pk_is_404(self):
+        """."""
+        from blog.views import EditPost
+        request = self.request_factory.post("/fake-path", {
+            "title": "Edited This Post",
+            "body": "flurb",
+            "status": "draft",
+            "featured": False
+        })
+        request.user = self.user
+        view = EditPost.as_view(template_name="blog/blog_edit_form.html")
+        with self.assertRaises(Http404):
+            view(request, pk=2048)
+
     def test_delete_post_deletes_post(self):
         """The DeletePost view should delete the given post."""
         from blog.views import DeletePost
@@ -214,6 +229,15 @@ class BlogViewsUnitTests(TestCase):
         view(request, pk=post.id)
         published = Post.published.all()
         self.assertTrue(len(published) == 0)
+
+    def test_delete_post_bad_pk_is_404(self):
+        """."""
+        from blog.views import DeletePost
+        request = self.request_factory.post("/fake-path")
+        request.user = self.user
+        view = DeletePost.as_view()
+        with self.assertRaises(Http404):
+            view(request, pk=2048)
 
     def test_create_post_creates_a_post(self):
         """The CreatePost view should create a new post."""

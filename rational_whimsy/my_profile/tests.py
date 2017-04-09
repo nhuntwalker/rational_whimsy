@@ -55,6 +55,23 @@ class ProfileModelTests(TestCase):
         new_user.save()
         self.assertTrue(new_user.profile == profile)
 
+    def test_profile_has_proper_attributes(self):
+        """."""
+        new_user = UserFactory.create()
+        new_user.save()
+        attrs = [
+            'user', 'photo', 'linkedin', 'github', 'twitter',
+            'facebook', 'instagram', 'email', 'resume', 'description'
+        ]
+        for attr in attrs:
+            self.assertTrue(hasattr(new_user.profile, attr))
+
+    def test_profile_string_repr_is_username(self):
+        """."""
+        new_user = UserFactory.create()
+        new_user.save()
+        self.assertEqual(str(new_user.profile), new_user.username)
+
 
 class ProfileViewTests(TestCase):
     """Tests for views associated with the profile model."""
@@ -245,3 +262,20 @@ class ProfileViewTests(TestCase):
         self.client.force_login(self.user)
         response = self.client.get(reverse_lazy("logout"), follow=True)
         self.assertIsInstance(get_user(response.wsgi_request), AnonymousUser)
+
+    def test_call_to_github_returns_parsed_json_as_dict(self):
+        """."""
+        from my_profile.views import get_github_info
+        url = 'https://api.github.com/users/nhuntwalker'
+        response = get_github_info(url)
+        self.assertIsInstance(response, dict)
+
+    def test_call_to_github_returns_user_data(self):
+        """."""
+        from my_profile.views import get_github_info
+        url = 'https://api.github.com/users/nhuntwalker'
+        response = get_github_info(url)
+        self.assertEqual(
+            response["repos_url"],
+            "https://api.github.com/users/nhuntwalker/repos"
+        )

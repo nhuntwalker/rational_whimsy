@@ -25,7 +25,9 @@ A cohesive, comprehensive plan for mapping out tests for my website's codebase.
 - `post_detail` view should be able to take a primary key to show the detail for an individual post
 - `post_detail` view should also be able to take a slug to show the detail for an individual post
 - `EditPost` view edits an existing post given the proper primary key
+- When `EditPost` is given the wrong `pk`, a 404 should be raised
 - `DeletePost` view actually deletes a given post
+- When `DeletePost` is given the wrong `pk`, a 404 should be raised
 - `CreatePost` view creates a post given the proper information
 
 
@@ -59,6 +61,8 @@ A cohesive, comprehensive plan for mapping out tests for my website's codebase.
 
 - A `Profile` is made whenever a `User` is saved
 - Only one `Profile` gets created when a `User` is saved
+- The `NMHWProfile` object has the proper attributes
+- The string representation of the `NMHWProfile` object is the username
 
 ### Views
 
@@ -86,15 +90,10 @@ A cohesive, comprehensive plan for mapping out tests for my website's codebase.
 
 ## To be written
 
-- When `EditPost` is given the wrong `pk`, a 404 should be raised
-- When `DeletePost` is given the wrong `pk`, a 404 should be raised
 - The `edit_post` route when given the right data actually edits the given post
 - The `edit_post` route when given the wrong pk shows a 404 page
 - The `delete_post` route when given the wrong pk shows a 404 page
 
-- The `NMHWProfile` object has the proper attributes
-- When given a photo and saved, the `NMHWProfile` saves the attribute
-- The string represent of the `NMHWProfile` object is the username
 - `get_github_repos` returns a serialized list of GitHub repositories that I've worked on
 - `get_github_info` takes in a URL with the appropriate headers and returns JSON corresponding to the data at the URL
 - `process_github_events` takes in some JSON event data from GitHub and returns a list of repositories from whitelisted repositories
