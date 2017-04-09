@@ -18,4 +18,4 @@ def not_found(request):
     featured_post = Post.published.filter(featured=True).first()
     return render(request, "rational_whimsy/404.html", {
         "featured_post": featured_post
-    })
+    }, status=404)
