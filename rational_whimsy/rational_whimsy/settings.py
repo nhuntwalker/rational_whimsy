@@ -173,5 +173,3 @@ else:
 
     MEDIA_URL = '/imgs/'
     MEDIA_ROOT = os.path.join(BASE_DIR, "MEDIA_ASSETS")
-
-
