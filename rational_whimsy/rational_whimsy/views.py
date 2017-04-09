@@ -11,3 +11,11 @@ def home_view(request):
         "posts": posts,
         "featured_post": featured_post
     })
+
+
+def not_found(request):
+    """Handler for a custom 404 page."""
+    featured_post = Post.published.filter(featured=True).first()
+    return render(request, "rational_whimsy/404.html", {
+        "featured_post": featured_post
+    })

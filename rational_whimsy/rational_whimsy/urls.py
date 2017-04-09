@@ -30,6 +30,9 @@ urlpatterns = [
     url(r'^redactor/', include('redactor.urls')),
 ]
 
+handler404 = 'rational_whimsy.views.not_found'
+
+
 if settings.DEBUG:  # pragma no cover
     urlpatterns += static(settings.STATIC_URL,
                           document_root=settings.STATIC_ROOT)

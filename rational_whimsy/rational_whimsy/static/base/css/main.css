@@ -22,6 +22,9 @@
 #full-header {
     display: block;
 }
+.center {
+    text-align: center;
+}
 
 #mobile-menu a,
 #main-menu a {

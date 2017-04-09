@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}Not Found{% endblock %}
+
+{% block content %}
+    <div id="post-detail">
+        <div class="post-body center">
+            <p>What you're looking for doesn't seem to exist. While you're here though, maybe check out the featured blog post?</p>
+        </div>
+    </div>
+    <section id="featured">
+        <section id="featured-background">
+        <img src="{% static "base/imgs/zen_garden.jpg" %}" />
+        </section>
+        <section id="featured-post">
+            <h2>{{ featured_post.title }}</h2>
+            <p class="mobile-only">{{ featured_post.body | striptags | truncatechars:175 }}</p>
+            <p class="tablet-only">{{ featured_post.body | striptags | truncatechars:470 }}</p>
+            <p class="desktop-only">{{ featured_post.body | striptags | truncatechars:470 }}</p>
+            <a href="{% url 'post_detail_slug' featured_post.slug %}">
+                <button class="more-btn orange-btn feature-btn">
+                    Read Post
+                </button>
+            </a>
+        </section>
+        <section id="featured-tag">
+            Featured Post
+        </section>
+    </section>
+{% endblock %}
