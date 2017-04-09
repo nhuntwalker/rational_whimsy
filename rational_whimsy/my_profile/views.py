@@ -45,7 +45,7 @@ def get_github_repos(request):
     api_url = 'https://api.github.com/users/nhuntwalker/events'
     api_url += '?q=""&per_page=100'
     events = get_github_info(api_url, HEADERS)
-    repo_list = process_github_events(events)
+    repo_list = process_github_events(events, HEADERS)
     serializer = EventSerializer(repo_list, many=True)
     return Response(serializer.data)
 
@@ -56,7 +56,7 @@ def get_github_info(url, headers=None):
     return resp.json()
 
 
-def process_github_events(data):
+def process_github_events(data, headers=None):
     """Given some JSON from github, process and return repos."""
     repo_names = []
     whitelist = ["nhuntwalker", "rwieruch", "StayWokeOrg", "bytes-seattle"]
@@ -69,7 +69,7 @@ def process_github_events(data):
             name = event["repo"]["name"]
             url = event["repo"]["url"]
             repo_names.append(name)
-            info = get_github_info(url, HEADERS)
+            info = get_github_info(url, headers)
             event_date = event["created_at"]
             creation_date = info["created_at"]
 
