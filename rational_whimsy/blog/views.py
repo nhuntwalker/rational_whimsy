@@ -2,7 +2,7 @@
 from blog.models import Post
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -26,9 +26,9 @@ class ListPosts(ListView):
 def post_detail(request, pk=None, slug=None):
     """Look at a single blog post in detail."""
     if slug:
-        post = Post.published.get(slug=slug)
+        post = get_object_or_404(Post, slug=slug)
     elif pk:
-        post = Post.published.get(pk=pk)
+        post = get_object_or_404(Post, pk=pk)
 
     return render(request, "blog/blog_detail.html", {
         "page": "blog",

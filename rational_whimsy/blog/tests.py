@@ -1,4 +1,5 @@
 """Tests of the blog app."""
+from django.http.response import Http404
 from django.test import TestCase, Client, RequestFactory
 from django.urls import reverse_lazy
 from django.utils.text import slugify
@@ -58,6 +59,29 @@ class BlogTestCase(TestCase):
         for attr in all_attrs:
             self.assertTrue(hasattr(post, attr))
 
+    def test_saved_post_draft_gets_created_date(self):
+        """."""
+        post = Post(
+            title="Test post",
+            slug=slugify("test post"),
+            body="Some body text for the sake of example.",
+        )
+        self.assertIsNone(post.created)
+        post.save()
+        self.assertIsInstance(post.created, datetime.datetime)
+
+    def test_saved_post_published_gets_created_date(self):
+        """."""
+        post = Post(
+            title="Test post",
+            slug=slugify("test post"),
+            body="Some body text for the sake of example.",
+            status="Published"
+        )
+        self.assertIsNone(post.created)
+        post.save()
+        self.assertIsInstance(post.created, datetime.datetime)
+
     def test_published_only_returns_published_posts(self):
         """The status of every post returned by Post.published is published."""
         for idx, item in enumerate(self.new_posts):
@@ -108,6 +132,15 @@ class BlogViewsUnitTests(TestCase):
             post.save()
         self.new_posts = new_posts
 
+    def add_mixed_posts(self):
+        """Add some blog posts, some of which are drafts."""
+        mixed_posts = [PostFactory.create() for i in range(6)]
+        for idx, post in enumerate(mixed_posts):
+            if (idx % 2):
+                post.status = 'draft'
+            post.save()
+        self.mixed_posts = mixed_posts
+
     def test_list_posts_lists_the_posts(self):
         """The ListPosts view should actually include a list of blog posts."""
         from blog.views import ListPosts
@@ -126,6 +159,16 @@ class BlogViewsUnitTests(TestCase):
         response = view(request)
         self.assertTrue("page" in response.context_data)
         self.assertTrue(response.context_data["page"] == "blog")
+
+    def test_list_posts_lists_only_published_posts(self):
+        """The ListPosts view should include only published posts."""
+        from blog.views import ListPosts
+        self.add_mixed_posts()
+        request = self.request_factory.get("/fake-path")
+        view = ListPosts.as_view(template_name='blog/blog_list.html')
+        response = view(request)
+        posts = response.context_data["object_list"]
+        self.assertTrue(len(posts) == Post.published.count())
 
     def test_post_detail_finds_primary_key(self):
         """The post_detail view should be able to take a primary key."""
@@ -161,6 +204,20 @@ class BlogViewsUnitTests(TestCase):
         post = Post.published.first()
         self.assertTrue(post.title == "Edited This Post")
 
+    def test_edit_post_bad_pk_is_404(self):
+        """."""
+        from blog.views import EditPost
+        request = self.request_factory.post("/fake-path", {
+            "title": "Edited This Post",
+            "body": "flurb",
+            "status": "draft",
+            "featured": False
+        })
+        request.user = self.user
+        view = EditPost.as_view(template_name="blog/blog_edit_form.html")
+        with self.assertRaises(Http404):
+            view(request, pk=2048)
+
     def test_delete_post_deletes_post(self):
         """The DeletePost view should delete the given post."""
         from blog.views import DeletePost
@@ -172,6 +229,15 @@ class BlogViewsUnitTests(TestCase):
         view(request, pk=post.id)
         published = Post.published.all()
         self.assertTrue(len(published) == 0)
+
+    def test_delete_post_bad_pk_is_404(self):
+        """."""
+        from blog.views import DeletePost
+        request = self.request_factory.post("/fake-path")
+        request.user = self.user
+        view = DeletePost.as_view()
+        with self.assertRaises(Http404):
+            view(request, pk=2048)
 
     def test_create_post_creates_a_post(self):
         """The CreatePost view should create a new post."""
@@ -235,6 +301,13 @@ class BlogRoutesTestCase(TestCase):
             )
             self.assertEqual(response.status_code, 200)
 
+    def test_blog_detail_bad_slug_returns_404(self):
+        """."""
+        response = self.client.get(
+            reverse_lazy("post_detail_slug", kwargs={"slug": "foobar"})
+        )
+        self.assertEqual(response.status_code, 404)
+
     def test_every_blog_detail_pk_returns_200(self):
         """Hitting the detail route for every post using the pk is 200."""
         for post in self.new_posts:
@@ -245,6 +318,13 @@ class BlogRoutesTestCase(TestCase):
                 )
             )
             self.assertEqual(response.status_code, 200)
+
+    def test_blog_detail_bad_pk_returns_404(self):
+        """."""
+        response = self.client.get(
+            reverse_lazy("post_detail_pk", kwargs={"pk": 1024})
+        )
+        self.assertEqual(response.status_code, 404)
 
     def test_create_route_has_form(self):
         """The create route has the appropriate form."""

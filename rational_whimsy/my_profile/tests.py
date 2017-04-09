@@ -4,12 +4,14 @@ from django.contrib.auth import get_user
 from django.contrib.auth.models import User, AnonymousUser
 from my_profile.models import NMHWProfile
 import factory
+import json
 from faker import Faker
 from django.forms import ModelForm
 from django.urls import reverse_lazy
 from bs4 import BeautifulSoup
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.core.files.uploadedfile import SimpleUploadedFile
+import os
 
 fake = Faker()
 
@@ -54,6 +56,23 @@ class ProfileModelTests(TestCase):
         new_user.set_password("flibbertygibbet")
         new_user.save()
         self.assertTrue(new_user.profile == profile)
+
+    def test_profile_has_proper_attributes(self):
+        """."""
+        new_user = UserFactory.create()
+        new_user.save()
+        attrs = [
+            'user', 'photo', 'linkedin', 'github', 'twitter',
+            'facebook', 'instagram', 'email', 'resume', 'description'
+        ]
+        for attr in attrs:
+            self.assertTrue(hasattr(new_user.profile, attr))
+
+    def test_profile_string_repr_is_username(self):
+        """."""
+        new_user = UserFactory.create()
+        new_user.save()
+        self.assertEqual(str(new_user.profile), new_user.username)
 
 
 class ProfileViewTests(TestCase):
@@ -245,3 +264,39 @@ class ProfileViewTests(TestCase):
         self.client.force_login(self.user)
         response = self.client.get(reverse_lazy("logout"), follow=True)
         self.assertIsInstance(get_user(response.wsgi_request), AnonymousUser)
+
+    def test_call_to_github_returns_parsed_json_as_dict(self):
+        """."""
+        from my_profile.views import get_github_info
+        url = 'https://api.github.com/users/nhuntwalker'
+        response = get_github_info(url)
+        self.assertIsInstance(response, dict)
+
+    def test_call_to_github_returns_user_data(self):
+        """."""
+        from my_profile.views import get_github_info
+        url = 'https://api.github.com/users/nhuntwalker'
+        response = get_github_info(url)
+        self.assertEqual(
+            response["repos_url"],
+            "https://api.github.com/users/nhuntwalker/repos"
+        )
+
+    def test_process_github_events_returns_good_repo_count(self):
+        """."""
+        from my_profile.views import process_github_events
+        path = os.path.dirname(__file__)
+        filepath = os.path.join(path, 'sample_github_event_json.json')
+        data = json.loads(open(filepath).read())
+        repositories = process_github_events(data)
+        self.assertEqual(len(repositories), 5)
+
+    def test_process_github_events_returns_repo_list(self):
+        """."""
+        from my_profile.views import process_github_events
+        path = os.path.dirname(__file__)
+        filepath = os.path.join(path, 'sample_github_event_json.json')
+        data = json.loads(open(filepath).read())
+        repositories = process_github_events(data)
+        for repo in repositories:
+            self.assertTrue("repo_url" in repo)
