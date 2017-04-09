@@ -98,6 +98,9 @@ rational_whimsy/MEDIA_ASSETS/post_covers/*
 !rational_whimsy/MEDIA_ASSETS/post_covers/stock-cover.jpg
 !rational_whimsy/MEDIA_ASSETS/profile_imgs/.gitkeep
 rational_whimsy/MEDIA_ASSETS/profile_imgs/*
+!rational_whimsy/static/.gitkeep
+rational_whimsy/static/*
+
 
 # Ansible
 ansible

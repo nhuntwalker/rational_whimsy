@@ -7,6 +7,7 @@ from blog.models import Post
 from django.contrib.auth.models import User
 import factory
 import datetime
+import random
 from bs4 import BeautifulSoup
 from faker import Faker
 
@@ -268,6 +269,12 @@ class BlogRoutesTestCase(TestCase):
         user.save()
         self.user = user
 
+    def feature_one(self):
+        """Make one of the new posts featured."""
+        post = random.choice(self.new_posts)
+        post.featured = True
+        post.save()
+
     def test_blog_list_returns_200(self):
         """Hitting the blog route returns a status 200."""
         response = self.client.get(reverse_lazy("list_posts"))
@@ -303,6 +310,7 @@ class BlogRoutesTestCase(TestCase):
 
     def test_blog_detail_bad_slug_returns_404(self):
         """."""
+        self.feature_one()
         response = self.client.get(
             reverse_lazy("post_detail_slug", kwargs={"slug": "foobar"})
         )
@@ -321,6 +329,7 @@ class BlogRoutesTestCase(TestCase):
 
     def test_blog_detail_bad_pk_returns_404(self):
         """."""
+        self.feature_one()
         response = self.client.get(
             reverse_lazy("post_detail_pk", kwargs={"pk": 1024})
         )
