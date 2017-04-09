@@ -4,12 +4,14 @@ from django.contrib.auth import get_user
 from django.contrib.auth.models import User, AnonymousUser
 from my_profile.models import NMHWProfile
 import factory
+import json
 from faker import Faker
 from django.forms import ModelForm
 from django.urls import reverse_lazy
 from bs4 import BeautifulSoup
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.core.files.uploadedfile import SimpleUploadedFile
+import os
 
 fake = Faker()
 
@@ -279,3 +281,22 @@ class ProfileViewTests(TestCase):
             response["repos_url"],
             "https://api.github.com/users/nhuntwalker/repos"
         )
+
+    def test_process_github_events_returns_good_repo_count(self):
+        """."""
+        from my_profile.views import process_github_events
+        path = os.path.dirname(__file__)
+        filepath = os.path.join(path, 'sample_github_event_json.json')
+        data = json.loads(open(filepath).read())
+        repositories = process_github_events(data)
+        self.assertEqual(len(repositories), 5)
+
+    def test_process_github_events_returns_repo_list(self):
+        """."""
+        from my_profile.views import process_github_events
+        path = os.path.dirname(__file__)
+        filepath = os.path.join(path, 'sample_github_event_json.json')
+        data = json.loads(open(filepath).read())
+        repositories = process_github_events(data)
+        for repo in repositories:
+            self.assertTrue("repo_url" in repo)
