@@ -301,6 +301,9 @@
         margin: 15px auto;
         color: #777;
     }
+    #github-list div {
+        width: 100%;
+    }
 }
 
 @media only screen and (min-device-width: 481px) and (max-device-width: 800px) {
@@ -605,5 +608,8 @@
         width: 80%;
         margin: 15px auto;
         color: #777;
+    }
+    #github-list div {
+        width: 100%;
     }
 }

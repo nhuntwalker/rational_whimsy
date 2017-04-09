@@ -318,6 +318,10 @@
     .pagination .next-page {
         float: right;
     }
+    #github-list div {
+        width: 100%;
+    }
+
 }
 
 @media only screen and (max-device-width: 480px) {
@@ -639,5 +643,8 @@
     }
     .pagination .next-page {
         float: right;
+    }
+    #github-list div {
+        width: 100%;
     }
 }
