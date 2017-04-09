@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'taggit',
     'django_extensions',
     'scripts',
-    'rest_framework'
+    'rest_framework',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -137,12 +138,38 @@ LOGIN_REDIRECT_URL = "/"
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
-MEDIA_URL = '/imgs/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "MEDIA_ASSETS")
+# MEDIA_URL = '/imgs/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, "MEDIA_ASSETS")
 
 
 REDACTOR_OPTIONS = {'lang': 'en'}
 REDACTOR_UPLOAD = 'uploads/'
+
+# AWS Configuration
+
+if not DEBUG:
+    AWS_HEADERS = { # see http://developer.yahoo.com/performance/rules.html#expires
+        'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+        'Cache-Control': 'max-age=3600',
+    }
+    AWS_STORAGE_BUCKET_NAME = 'rationalwhimsy'
+    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', '')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', '')
+    AWS_S3_CUSTOM_DOMAIN = '{}.s3.amazonaws.com'.format(AWS_STORAGE_BUCKET_NAME)
+    STATICFILES_LOCATION = 'static'
+    STATICFILES_STORAGE = 'rational_whimsy.custom_storages.StaticStorage'
+    STATIC_URL = "https://{}/{}/".format(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+
+    MEDIAFILES_LOCATION = 'media'
+    MEDIAFILES_STORAGE = 'rational_whimsy.custom_storages.MediaStorage'
+    MEDIA_URL = "https://{}/{}/".format(AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+
+else:
+    STATIC_URL = '/static/'
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+    MEDIA_URL = '/imgs/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, "MEDIA_ASSETS")

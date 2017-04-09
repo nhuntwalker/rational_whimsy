@@ -1,5 +1,6 @@
 appnope==0.1.0
 beautifulsoup4==4.5.3
+boto==2.46.1
 bs4==0.0.1
 coverage==4.2
 decorator==4.0.10
@@ -7,6 +8,7 @@ Django==1.10.3
 django-extensions==1.7.6
 django-filter==1.0.1
 django-registration==2.2
+django-storages==1.5.2
 django-taggit==0.22.0
 django-wysiwyg-redactor==0.4.9.1
 djangorestframework==3.5.4
