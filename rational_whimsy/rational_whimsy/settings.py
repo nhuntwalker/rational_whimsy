@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'taggit',
     'django_extensions',
     'scripts',
-    'rest_framework'
+    'rest_framework',
+    'storages'
 ]
 
 MIDDLEWARE = [
