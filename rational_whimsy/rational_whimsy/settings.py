@@ -165,6 +165,7 @@ if not DEBUG:
 
     MEDIAFILES_LOCATION = 'media'
     MEDIAFILES_STORAGE = 'rational_whimsy.custom_storages.MediaStorage'
+    DEFAULT_FILE_STORAGE = MEDIAFILES_STORAGE
     MEDIA_URL = "https://{}/{}/".format(AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
 
 else:
@@ -185,7 +186,7 @@ else:
     STATICFILES_STORAGE = 'rational_whimsy.custom_storages.StaticStorage'
     STATIC_URL = "https://{}/{}/".format(AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
 
-    MEDIA_ROOT = None
     MEDIAFILES_LOCATION = 'media'
     MEDIAFILES_STORAGE = 'rational_whimsy.custom_storages.MediaStorage'
+    DEFAULT_FILE_STORAGE = MEDIAFILES_STORAGE
     MEDIA_URL = "https://{}/{}/".format(AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
