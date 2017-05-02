@@ -104,3 +104,6 @@ rational_whimsy/static/*
 
 # Ansible
 ansible
+
+# Selenium
+selenium
