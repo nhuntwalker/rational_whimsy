@@ -11,6 +11,10 @@ import random
 from bs4 import BeautifulSoup
 from faker import Faker
 
+from selenium.webdriver.chrome.webdriver import WebDriver
+# from django.contrib.staticfiles.testing import StaticLiveServerTestCase
+from django.test import LiveServerTestCase
+
 # Create your tests here.
 
 fake = Faker()
@@ -466,3 +470,33 @@ class BlogRoutesTestCase(TestCase):
         )
         chain = response.redirect_chain
         self.assertTrue(reverse_lazy("list_posts") in chain[0])
+
+
+class SeleniumTests(LiveServerTestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        super(SeleniumTests, cls).setUpClass()
+        cls.new_posts = [PostFactory.create() for i in range(20)]
+        for post in cls.new_posts:
+            post.save()
+        post.featured = True
+        post.save()
+        cls.selenium = WebDriver()
+        # cls.selenium.implicitly_wait(1)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.selenium.quit()
+        super(SeleniumTests, cls).tearDownClass()
+
+    def test_menu_btn1(self):
+        self.selenium.get(self.live_server_url)
+        self.selenium.find_elements_by_css_selector(
+            "a[href='{}']".format(reverse_lazy('list_posts'))
+        )[1].click()
+
+    def test_menu_btn2(self):
+        self.selenium.find_elements_by_css_selector(
+            "a[href='{}']".format(reverse_lazy('home_page'))
+        )[1].click()
