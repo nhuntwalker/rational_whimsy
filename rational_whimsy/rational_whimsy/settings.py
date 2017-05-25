@@ -153,7 +153,7 @@ REDACTOR_UPLOAD = 'uploads/'
 if not DEBUG:
     AWS_HEADERS = { # see http://developer.yahoo.com/performance/rules.html#expires
         'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
-        'Cache-Control': 'max-age=3600',
+        'Cache-Control': 'max-age=60',
     }
     AWS_STORAGE_BUCKET_NAME = 'rationalwhimsy'
     AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', '')

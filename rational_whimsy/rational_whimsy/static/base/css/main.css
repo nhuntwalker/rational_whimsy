@@ -211,6 +211,23 @@
     width: 90%;
     margin: auto;
 }
+.post-tags {
+    background-color: #dadada;
+    overflow: hidden;
+}
+.tag-list li {
+    float: left;
+    padding: 4px 5px;
+    font-style: italic;
+}
+.tag-list li a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+.tag-list li a:hover {
+    color: #9E9E9E;
+}
 
 @media only screen and (min-width: 801px) {
     #header-container {
@@ -1010,22 +1027,5 @@
     }
     .horizontal-gray {
         width: 100%;
-    }
-    .post-tags {
-        background-color: #dadada;
-        overflow: hidden;
-    }
-    .tag-list li {
-        float: left;
-        padding: 4px 5px;
-        font-style: italic;
-    }
-    .tag-list li a {
-        color: white;
-        text-decoration: none;
-        cursor: pointer;
-    }
-    .tag-list li a:hover {
-        color: #9E9E9E;
     }
 }

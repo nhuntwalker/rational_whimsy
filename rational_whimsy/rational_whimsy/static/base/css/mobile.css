@@ -1,3 +1,24 @@
+.post-tags {
+    background-color: #dadada;
+    overflow: hidden;
+}
+.tag-list li {
+    float: left;
+    padding: 4px 5px;
+    font-style: italic;
+}
+.tag-list li a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+.tag-list li a:hover {
+    color: #9E9E9E;
+}
+.foo {
+    color: black;
+}
+
 @media only screen and (max-width: 480px) {
     .tag-section {
         display: none;
@@ -283,7 +304,7 @@
     .post-list button,
     .pagination button  {
         border: none;
-        color: white;
+        color: green;
         width: 100%;
         cursor: pointer;
         text-transform: uppercase;
@@ -612,7 +633,7 @@
     .post-list button,
     .pagination button  {
         border: none;
-        color: white;
+        color: green;
         width: 100%;
         cursor: pointer;
         text-transform: uppercase;

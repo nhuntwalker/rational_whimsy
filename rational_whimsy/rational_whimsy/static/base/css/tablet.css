@@ -1,3 +1,21 @@
+.post-tags {
+    background-color: #dadada;
+    overflow: hidden;
+}
+.tag-list li {
+    float: left;
+    padding: 4px 5px;
+    font-style: italic;
+}
+.tag-list li a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+.tag-list li a:hover {
+    color: #9E9E9E;
+}
+
 @media only screen and (min-width: 481px) and (max-width: 800px) {
 
     .tag-section {
