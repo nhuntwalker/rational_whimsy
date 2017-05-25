@@ -1,5 +1,5 @@
 .post-tags {
-    background-color: #dadada;
+    background-color: #cacaca;
     overflow: hidden;
 }
 .tag-list li {
@@ -8,6 +8,7 @@
     font-style: italic;
 }
 .tag-list li a {
+    font-weight: 500;
     color: white;
     text-decoration: none;
     cursor: pointer;
