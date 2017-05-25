@@ -1,5 +1,8 @@
 @media only screen and (min-width: 481px) and (max-width: 800px) {
 
+    .tag-section {
+        display: none;
+    }
     .tablet-only {
         display: block;
     }
