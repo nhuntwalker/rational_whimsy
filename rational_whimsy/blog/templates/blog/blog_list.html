@@ -25,6 +25,16 @@
                 <h2>{{ post.title }}</h2>
                 <p>{{ post.body | truncatewords:30 | striptags }}</p>
             </section>
+            {% if post.tags %}
+            <div class="clearfix"></div>
+            <section class="post-tags">
+                <ul class="tag-list">
+                {% for tag in post.tags.all %}
+                <li><a href="{% url 'tagged_as' tag %}">{{ tag }}</a></li>
+                {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
             <a href="{% url 'post_detail_slug' post.slug %}">
                 <button>
                     <div class="btn-txt">Continue</div>
@@ -47,6 +57,18 @@
             {% endif %}
         </section>
     {% endif %}
+    </section>
+    <section class="tag-section">
+        <section class="tags-inner">
+            <h2 class="sidebar-head">Blog Tags</h2>
+            {% for tag in tag_list %}
+                <div class="tag-item">
+                    <a href="{% url 'tagged_as' tag.name %}">
+                        <span class="tag-name">{{ tag.name }}</span><span class="tag-count">{{ tag.count }}</span>
+                    </a>
+                </div>
+            {% endfor %}
+        </section>
     </section>
 </section>
 {% endblock %}

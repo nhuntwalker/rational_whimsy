@@ -21,7 +21,11 @@ make_private.short_description = "Mark selected stories as private."
 class PostAdmin(admin.ModelAdmin):
     """Handle how the Post model appears in the admin."""
 
-    fields = ("cover_img", "title", "slug", "published_date", "body", "status", "featured", "tags")
+    fields = (
+        "cover_img", "title", "slug",
+        "published_date", "body", "status",
+        "featured", "tags"
+    )
     list_display = ("title", "slug", "created", "published_date", "status")
     prepopulated_fields = {"slug": ("title",)}
     ordering = ["-published_date", "-created", "status"]

@@ -2,6 +2,7 @@
 from blog.models import Post
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Count
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView
@@ -20,7 +21,34 @@ class ListPosts(ListView):
         """Need to add a bit more context."""
         context = super(ListPosts, self).get_context_data(**kwargs)
         context["page"] = "blog"
+        context["tag_list"] = Post.tags.values('name').annotate(count=Count('name'))
         return context
+
+
+class ListTaggedPosts(ListView):
+    """List out all of the individual posts."""
+
+    model = Post
+    template_name = "blog/blog_list.html"
+    queryset = Post.published.all()
+    paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        """Need to add a bit more context."""
+        context = super(ListTaggedPosts, self).get_context_data(**kwargs)
+        context["page"] = "blog"
+        context["tag_list"] = Post.tags.values(
+            'name'
+        ).annotate(
+            count=Count('name')
+        ).order_by('-count')[:100]
+        return context
+
+    def get_queryset(self):
+        """Only select particular posts that have the given tag."""
+        queryset = super(ListTaggedPosts, self).get_queryset()
+        queryset = queryset.filter(tags__name__in=[self.kwargs['tag']])
+        return queryset
 
 
 def post_detail(request, pk=None, slug=None):

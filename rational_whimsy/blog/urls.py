@@ -3,6 +3,7 @@
 from django.conf.urls import url
 from blog.views import (
     ListPosts,
+    ListTaggedPosts,
     post_detail,
     CreatePost,
     EditPost,
@@ -19,5 +20,10 @@ urlpatterns = [
         name="post_detail_slug"
     ),
     url(r'^(?P<pk>[0-9]+)/edit$', EditPost.as_view(), name="edit_post"),
-    url(r'^(?P<pk>[0-9]+)/delete$', DeletePost.as_view(), name="delete_post")
+    url(r'^(?P<pk>[0-9]+)/delete$', DeletePost.as_view(), name="delete_post"),
+    url(
+        r'^tagged/(?P<tag>[a-z0-9\-_(\%20)\s]+)',
+        ListTaggedPosts.as_view(),
+        name="tagged_as"
+    )
 ]
