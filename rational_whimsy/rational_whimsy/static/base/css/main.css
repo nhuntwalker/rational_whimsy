@@ -211,6 +211,7 @@
     width: 90%;
     margin: auto;
 }
+
 .post-tags {
     background-color: #cacaca;
     overflow: hidden;
@@ -229,6 +230,34 @@
 }
 .tag-list li a:hover {
     color: #9E9E9E;
+}
+
+#main-tag {
+    margin-top: 15px;
+    background-color: #cacaca;
+    color: white;
+    padding: 10px;
+    font-size: 1.3em;
+}
+#main-tag span {
+    font-style: italic;
+}
+#post-detail .tag-list {
+    display: inline-block;
+}
+#post-detail .post-tags {
+    background-color: transparent;
+}
+#post-detail .tag-list li {
+    padding: 0 5px;
+}
+#post-detail .tag-list li a {
+    color: #cacaca;
+    font-weight: 100;
+}
+#post-detail .tag-pointer {
+    float: left;
+    margin-bottom: 4px;
 }
 
 @media only screen and (min-width: 801px) {

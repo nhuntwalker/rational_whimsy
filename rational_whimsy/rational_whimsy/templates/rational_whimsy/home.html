@@ -38,6 +38,16 @@
                     <h3>{{ post.title }}</h3>
                     <p>{{ post.body | striptags | truncatechars:200 }}</p>
                 </div>
+                {% if post.tags.all %}
+                <div class="clearfix"></div>
+                <section class="post-tags">
+                    <ul class="tag-list">
+                    {% for tag in post.tags.all %}
+                    <li><a href="{% url 'tagged_as' tag %}">{{ tag }}</a></li>
+                    {% endfor %}
+                    </ul>
+                </section>
+                {% endif %}
                 <a href="{% url 'post_detail_slug' post.slug %}">
                     <button>
                         <div class="btn-txt">Continue</div>

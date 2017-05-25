@@ -46,6 +46,7 @@ class ListTaggedPosts(ListView):
         ).annotate(
             count=Count('name')
         ).order_by('-count')[:100]
+        context['main_tag'] = self.kwargs['tag']
         return context
 
     def get_queryset(self):
