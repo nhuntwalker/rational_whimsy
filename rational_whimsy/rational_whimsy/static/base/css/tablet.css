@@ -311,6 +311,9 @@
 
 @media only screen and (min-device-width: 481px) and (max-device-width: 800px) {
 
+    .tag-section {
+        display: none;
+    }
     .tablet-only {
         display: block;
     }

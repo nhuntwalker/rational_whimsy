@@ -328,6 +328,9 @@
 }
 
 @media only screen and (max-device-width: 480px) {
+    .tag-section {
+        display: none;
+    }
     .mobile-only {
         display: block;
     }
