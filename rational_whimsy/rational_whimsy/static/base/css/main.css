@@ -214,6 +214,7 @@
 .post-tags {
     background-color: #cacaca;
     overflow: hidden;
+    padding: 0 10px 5px;
 }
 .tag-list li {
     float: left;
