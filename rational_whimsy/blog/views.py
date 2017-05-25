@@ -21,7 +21,11 @@ class ListPosts(ListView):
         """Need to add a bit more context."""
         context = super(ListPosts, self).get_context_data(**kwargs)
         context["page"] = "blog"
-        context["tag_list"] = Post.tags.values('name').annotate(count=Count('name'))
+        context["tag_list"] = Post.tags.values(
+            'name'
+        ).annotate(
+            count=Count('name')
+        ).order_by('-count')[:100]
         return context
 
 
