@@ -31,7 +31,7 @@ class Project(models.Model):
     title = models.CharField(name="title", max_length=255)
     cover_img = models.ImageField(
         upload_to="project_covers",
-        default=""
+        default="post_covers/stock-cover.jpg"
     )
     body = RedactorField(verbose_name="body")
     created = models.DateTimeField(name="created", auto_now_add=True)

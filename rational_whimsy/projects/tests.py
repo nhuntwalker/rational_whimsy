@@ -35,8 +35,9 @@ class ProjectTestCase(TestCase):
         proj = ProjectFactory.create()
         all_attrs = [
             "title", "body", "created", "published_date",
-            "modified", "slug", "status", "featured", "tags",
+            "modified", "slug", "status", "featured",
             "published"
         ]
         for attr in all_attrs:
+            import pdb; pdb.set_trace()
             self.assertTrue(hasattr(proj, attr))
