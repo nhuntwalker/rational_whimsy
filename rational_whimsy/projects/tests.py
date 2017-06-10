@@ -5,9 +5,9 @@ from django.test import TestCase, Client, RequestFactory
 import datetime
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.text import slugify
+import factory
 import os
 from projects.models import Project, Scripts, Data
-import factory
 
 HERE = os.path.dirname(__file__)
 
@@ -208,3 +208,34 @@ class ProjectViewsUnitTests(TestCase):
         response = view(self.get_req)
         projects = response.context_data['object_list']
         self.assertTrue(len(projects) == 3)
+
+    def test_list_tagged_projects_only_shows_projects_with_tag(self):
+        """The ListTaggedProjects view shows projects matching a tag."""
+        from projects.views import ListTaggedProjects
+        self.add_projects()
+        projs = Project.published.all()
+        for proj in projs[:3]:
+            proj.tags.add('data')
+            proj.save()
+        view = ListTaggedProjects.as_view()
+        response = view(self.get_req, **{'tag': 'data'})
+        short_projects = response.context_data['object_list']
+        self.assertTrue(len(short_projects) == 3)
+
+    def test_project_detail_contains_project_info(self):
+        """The ProjectDetail view just accesses and shows one project."""
+        from projects.views import ProjectDetail
+        self.add_projects()
+        proj = Project.published.order_by('?').first()
+        view = ProjectDetail.as_view()
+        response = view(self.get_req, **{'pk': proj.pk})
+        self.assertTrue(response.context_data['project'] == proj)
+
+    def test_project_detail_can_use_slug(self):
+        """The ProjectDetail view just accesses and shows one project."""
+        from projects.views import ProjectDetail
+        self.add_projects()
+        proj = Project.published.order_by('?').first()
+        view = ProjectDetail.as_view()
+        response = view(self.get_req, **{'slug': proj.slug})
+        self.assertTrue(response.context_data['project'] == proj)
