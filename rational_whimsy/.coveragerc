@@ -3,6 +3,7 @@ source =
     rational_whimsy
     blog
     my_profile
+    projects
 
 omit = 
     */migrations/*
