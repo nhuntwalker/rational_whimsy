@@ -75,7 +75,7 @@ class Scripts(models.Model):
     """Model for individual javascript files."""
 
     name = models.CharField(name="name", max_length=255)
-    upload_date = models.DateTimeField(name="upload_date", auto_add_now=True)
+    upload_date = models.DateTimeField(name="upload_date", auto_now_add=True)
     file = models.FileField(
         upload_to="project_scripts",
     )
@@ -88,7 +88,7 @@ class Data(models.Model):
     """Model for individual data files."""
 
     name = models.CharField(name="name", max_length=255)
-    upload_date = models.DateTimeField(name="upload_date", auto_add_now=True)
+    upload_date = models.DateTimeField(name="upload_date", auto_now_add=True)
     file = models.FileField(
         upload_to="project_data",
     )
