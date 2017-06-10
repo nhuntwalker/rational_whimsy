@@ -2,6 +2,8 @@
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from redactor.fields import RedactorField
+from taggit.managers import TaggableManager
 
 # Create your models here.
 
@@ -31,8 +33,7 @@ class Project(models.Model):
         upload_to="project_covers",
         default=""
     )
-    body = models.TextField(name="body")
-    code = models.TextField(name="code", blank=True, default=True)
+    body = RedactorField(verbose_name="body")
     created = models.DateTimeField(name="created", auto_now_add=True)
     published_date = models.DateTimeField(
         name="published_date",
@@ -49,6 +50,7 @@ class Project(models.Model):
     featured = models.BooleanField(default=False)
     objects = models.Manager()
     published = ProjectManager()
+    tags = TaggableManager()
 
     def __str__(self):
         """The string representation of the object."""
@@ -67,3 +69,29 @@ def unfeature_project(sender, **kwargs):
         for project in other_projects:
             project.featured = False
             project.save()
+
+
+class Scripts(models.Model):
+    """Model for individual javascript files."""
+
+    name = models.CharField(name="name", max_length=255)
+    upload_date = models.DateTimeField(name="upload_date", auto_add_now=True)
+    file = models.FileField(
+        upload_to="project_scripts",
+    )
+    project = models.ForeignKey(
+        Project, on_delete=models.CASCADE, related_name="scripts"
+    )
+
+
+class Data(models.Model):
+    """Model for individual data files."""
+
+    name = models.CharField(name="name", max_length=255)
+    upload_date = models.DateTimeField(name="upload_date", auto_add_now=True)
+    file = models.FileField(
+        upload_to="project_data",
+    )
+    project = models.ForeignKey(
+        Project, on_delete=models.CASCADE, related_name="data_sets"
+    )
