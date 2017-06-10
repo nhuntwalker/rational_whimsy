@@ -1,5 +1,5 @@
 """Tests for the projects app."""
-from django.test import TestCase
+from django.test import TestCase, Client, RequestFactory
 
 # Create your tests here.
 import datetime
@@ -152,3 +152,59 @@ class DataTestCase(TestCase):
         )
         data.save()
         self.assertEquals(self.project.data_sets.first(), data)
+
+
+class ProjectViewsUnitTests(TestCase):
+    """Unit tests for the views of the projects app."""
+
+    def setUp(self):
+        """Set up a test client."""
+        self.client = Client()
+        self.request_factory = RequestFactory()
+        self.get_req = RequestFactory().get('/foo')
+
+    def add_projects(self):
+        """Add some projects to be used for testing views."""
+        [ProjectFactory.create().save() for i in range(20)]
+
+    def add_mixed_projects(self):
+        """Add some projects, some of which are drafts."""
+        mixed_projs = [ProjectFactory.create() for i in range(6)]
+        for idx, proj in enumerate(mixed_projs):
+            if (idx % 2):
+                proj.status = 'draft'
+            proj.save()
+
+    def test_list_projects_lists_project_objects(self):
+        """The ListProjects view should include a list of project objects."""
+        from projects.views import ListProjects
+        self.add_projects()
+        view = ListProjects.as_view()
+        response = view(self.get_req)
+        projects = response.context_data["object_list"]
+        self.assertTrue(isinstance(projects[0], Project))
+
+    def test_list_projects_page_name_is_projects(self):
+        """The type of page we're looking at should be a project page."""
+        from projects.views import ListProjects
+        view = ListProjects.as_view()
+        response = view(self.get_req)
+        self.assertTrue(response.context_data['page'] == 'projects')
+
+    def test_list_projects_page_only_shows_five(self):
+        """The ListProjects view only shows five projects at a time."""
+        from projects.views import ListProjects
+        self.add_projects()
+        view = ListProjects.as_view()
+        response = view(self.get_req)
+        projects = response.context_data["object_list"]
+        self.assertTrue(len(projects) == 5)
+
+    def test_list_projects_page_only_shows_published(self):
+        """The ListProjects view only shows published projects."""
+        from projects.views import ListProjects
+        self.add_mixed_projects()
+        view = ListProjects.as_view()
+        response = view(self.get_req)
+        projects = response.context_data['object_list']
+        self.assertTrue(len(projects) == 3)
