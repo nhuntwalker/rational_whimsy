@@ -9,7 +9,7 @@ class ListProjects(ListView):
     """List all of the individual projects."""
 
     model = Project
-    template_name = "project/project_list.html"
+    template_name = "projects/project_list.html"
     queryset = Project.published.all()
     paginate_by = 5
 
@@ -29,7 +29,7 @@ class ListTaggedProjects(ListView):
     """List all of the projects matching a tag."""
 
     model = Project
-    template_name = "project/project_list.html"
+    template_name = "projects/project_list.html"
     queryset = Project.published.all()
     paginate_by = 5
 
@@ -56,7 +56,7 @@ class ProjectDetail(DetailView):
     """Show the detail for an individual project."""
 
     model = Project
-    template_name = "project/project_detail.html"
+    template_name = "projects/project_detail.html"
     query_pk_and_slug = True
     context_object_name = 'project'
 

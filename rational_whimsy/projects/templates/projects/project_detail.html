@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ project.title }}{% endblock %}
+
+{% block content %}
+<article id="post-detail">
+    <h1>{{ project.title }}</h1>
+    <p class="post-date">Posted on {{ project.published_date | date:"M j, Y"}} | Permalink: <a href="{% url 'post_detail_pk' project.pk %}"><i class="fa fa-link" aria-hidden="true"></i></a></p>
+    {% if project.tags.all %}
+    <div class="clearfix"></div>
+    <section class="post-tags">
+        <span class="tag-pointer">Tagged:</span> 
+        <ul class="tag-list">
+        {% for tag in project.tags.all %}
+        <li><a href="{% url 'project_tagged_as' tag %}">{{ tag }}</a></li>
+        {% endfor %}
+        </ul>
+    </section>
+    {% endif %}
+    <div class="horizontal-gray"></div>
+    {% if project.cover_img and project.cover_img.url != "/imgs/post_covers/stock-cover.jpg" %}
+    <div class="post-cover">
+        <img src="{{ project.cover_img.url }}"/>
+    </div>
+    {% endif %}
+    <div class="post-body">
+    {{ project.body | safe}}
+    </div>
+</article>
+
+{% endblock %}

@@ -7,6 +7,35 @@ from taggit.managers import TaggableManager
 
 # Create your models here.
 
+
+class Scripts(models.Model):
+    """Model for individual javascript files."""
+
+    name = models.CharField(name="name", max_length=255)
+    upload_date = models.DateTimeField(name="upload_date", auto_now_add=True)
+    file = models.FileField(
+        upload_to="project_scripts",
+    )
+
+    class Meta:
+
+        verbose_name_plural = 'scripts'
+
+
+class Data(models.Model):
+    """Model for individual data files."""
+
+    name = models.CharField(name="name", max_length=255)
+    upload_date = models.DateTimeField(name="upload_date", auto_now_add=True)
+    file = models.FileField(
+        upload_to="project_data"
+    )
+
+    class Meta:
+
+        verbose_name_plural = 'data'
+
+
 PUBLICATION_STATUS = (
     ("published", "Published"),
     ("draft", "Draft"),
@@ -51,6 +80,14 @@ class Project(models.Model):
     objects = models.Manager()
     published = ProjectManager()
     tags = TaggableManager()
+    scripts = models.ForeignKey(
+        Scripts, on_delete=models.CASCADE, related_name="project",
+        blank=True, null=True
+    )
+    data_sets = models.ForeignKey(
+        Data, on_delete=models.CASCADE, related_name="project",
+        blank=True, null=True
+    )
 
     def __str__(self):
         """The string representation of the object."""
@@ -69,29 +106,3 @@ def unfeature_project(sender, **kwargs):
         for project in other_projects:
             project.featured = False
             project.save()
-
-
-class Scripts(models.Model):
-    """Model for individual javascript files."""
-
-    name = models.CharField(name="name", max_length=255)
-    upload_date = models.DateTimeField(name="upload_date", auto_now_add=True)
-    file = models.FileField(
-        upload_to="project_scripts",
-    )
-    project = models.ForeignKey(
-        Project, on_delete=models.CASCADE, related_name="scripts"
-    )
-
-
-class Data(models.Model):
-    """Model for individual data files."""
-
-    name = models.CharField(name="name", max_length=255)
-    upload_date = models.DateTimeField(name="upload_date", auto_now_add=True)
-    file = models.FileField(
-        upload_to="project_data"
-    )
-    project = models.ForeignKey(
-        Project, on_delete=models.CASCADE, related_name="data_sets"
-    )

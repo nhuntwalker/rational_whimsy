@@ -1,0 +1,77 @@
+{% extends "layout.html" %}
+
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+<section id="content-wrapper">
+    <div class="page-header">
+        <h1>Projects</h1>
+    </div>
+    <section class="post-list">
+    {% if main_tag %}
+        <h2 id="main-tag">Projects tagged with: <span>{{ main_tag }}</span></h2>
+    {% endif %}
+    {% for project in object_list %}
+        <article>
+            <div class="cover-img">
+            {% if project.cover_img and project.cover_img.url != "/imgs/post_covers/stock-cover.jpg" %}
+                <img src="{{ project.cover_img.url }}" />
+            {% endif %}
+                <p class="post-date">{{ project.published_date | date:"M j, Y" }}</p>
+            </div>
+            
+            {% if project.cover_img and project.cover_img.url != "/imgs/post_covers/stock-cover.jpg" %}
+            <section class="post-content">
+            {% else %}
+            <section class="post-content blank-img">
+            {% endif %}
+                <h2>{{ project.title }}</h2>
+                <p>{{ project.body | truncatewords:30 | striptags }}</p>
+            </section>
+            {% if project.tags.all %}
+            <div class="clearfix"></div>
+            <section class="post-tags">
+                <ul class="tag-list">
+                {% for tag in project.tags.all %}
+                <li><a href="{% url 'project_tagged_as' tag %}">{{ tag }}</a></li>
+                {% endfor %}
+                </ul>
+            </section>
+            {% endif %}
+            <a href="{% url 'project_detail_slug' project.slug %}">
+                <button>
+                    <div class="btn-txt">Continue</div>
+                    <div class="arrow"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+                </button>
+            </a>
+        </article>
+    {% endfor %}
+    {% if is_paginated %}
+        <section class="pagination">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">
+            <button class="prev-page">Previous Page</button>
+            </a>
+            {% endif %}
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">
+            <button class="next-page">Next Page</button>
+            </a>
+            {% endif %}
+        </section>
+    {% endif %}
+    </section>
+    <section class="tag-section">
+        <section class="tags-inner">
+            <h2 class="sidebar-head">Project Tags</h2>
+            {% for tag in tag_list %}
+                <div class="tag-item">
+                    <a href="{% url 'project_tagged_as' tag.name %}">
+                        <span class="tag-name">{{ tag.name }}</span><span class="tag-count">{{ tag.count }}</span>
+                    </a>
+                </div>
+            {% endfor %}
+        </section>
+    </section>
+</section>
+{% endblock %}
