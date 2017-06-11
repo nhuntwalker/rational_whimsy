@@ -1,7 +1,7 @@
 """The Coding Project model."""
 from django.db import models
-from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.dispatch import receiver
 from redactor.fields import RedactorField
 from taggit.managers import TaggableManager
 
@@ -90,7 +90,7 @@ class Data(models.Model):
     name = models.CharField(name="name", max_length=255)
     upload_date = models.DateTimeField(name="upload_date", auto_now_add=True)
     file = models.FileField(
-        upload_to="project_data",
+        upload_to="project_data"
     )
     project = models.ForeignKey(
         Project, on_delete=models.CASCADE, related_name="data_sets"

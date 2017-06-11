@@ -7,7 +7,9 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils.text import slugify
 import factory
 import os
-from projects.models import Project, Scripts, Data
+from projects.models import (
+    Project, Scripts, Data
+)
 
 HERE = os.path.dirname(__file__)
 
