@@ -107,3 +107,6 @@ ansible
 
 # Selenium
 selenium
+
+# visual studio
+.vscode
