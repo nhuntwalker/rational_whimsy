@@ -8,16 +8,16 @@ from projects.views import (
 )
 
 urlpatterns = [
-    url(r'^$', ListProjects.as_view(), name="list_posts"),
+    url(r'^$', ListProjects.as_view(), name="list_projects"),
     url(
         r'^(?P<pk>[0-9]+)$',
         ProjectDetail.as_view(),
-        name="post_detail_pk"
+        name="project_detail_pk"
     ),
     url(
         r'^(?P<slug>[a-z0-9\-_]+)$',
         ProjectDetail.as_view(),
-        name="post_detail_slug"
+        name="project_detail_slug"
     ),
     url(
         r'^tagged/(?P<tag>[a-z0-9\-_(\%20)\s]+)',

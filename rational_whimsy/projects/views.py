@@ -64,4 +64,5 @@ class ProjectDetail(DetailView):
         """Just add the page name to the context."""
         context = super(ProjectDetail, self).get_context_data(**kwargs)
         context['page'] = 'project'
+        import pdb; pdb.set_trace()
         return context

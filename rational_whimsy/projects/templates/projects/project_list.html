@@ -33,7 +33,7 @@
             <section class="post-tags">
                 <ul class="tag-list">
                 {% for tag in project.tags.all %}
-                <li><a href="{% url 'project_tagged_as' tag %}">{{ tag }}</a></li>
+                <li><a href="{% url 'projects_tagged_as' tag %}">{{ tag }}</a></li>
                 {% endfor %}
                 </ul>
             </section>
@@ -66,7 +66,7 @@
             <h2 class="sidebar-head">Project Tags</h2>
             {% for tag in tag_list %}
                 <div class="tag-item">
-                    <a href="{% url 'project_tagged_as' tag.name %}">
+                    <a href="{% url 'projects_tagged_as' tag.name %}">
                         <span class="tag-name">{{ tag.name }}</span><span class="tag-count">{{ tag.count }}</span>
                     </a>
                 </div>

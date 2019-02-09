@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 
 {% block title %}{{ project.title }}{% endblock %}
+{% block head_libraries %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js"></script>
+{% endblock %}
 
 {% block content %}
 <article id="post-detail">
@@ -12,7 +15,7 @@
         <span class="tag-pointer">Tagged:</span> 
         <ul class="tag-list">
         {% for tag in project.tags.all %}
-        <li><a href="{% url 'project_tagged_as' tag %}">{{ tag }}</a></li>
+        <li><a href="{% url 'projects_tagged_as' tag %}">{{ tag }}</a></li>
         {% endfor %}
         </ul>
     </section>
@@ -20,12 +23,16 @@
     <div class="horizontal-gray"></div>
     {% if project.cover_img and project.cover_img.url != "/imgs/post_covers/stock-cover.jpg" %}
     <div class="post-cover">
-        <img src="{{ project.cover_img.url }}"/>
+        <div id="figure_container"></div>
     </div>
     {% endif %}
     <div class="post-body">
     {{ project.body | safe}}
     </div>
 </article>
+
+{% endblock %}
+
+{% block javascript %}
 
 {% endblock %}
